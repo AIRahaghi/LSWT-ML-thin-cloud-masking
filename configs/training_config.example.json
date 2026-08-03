@@ -1,0 +1,21 @@
+{
+  "train_csv": "D:/Trishna/Landsat_processing/processed/train_test_all_merged/df_train_all.csv",
+  "test_csv": "D:/Trishna/Landsat_processing/processed/train_test_all_merged/df_test_all.csv",
+  "output_dir": "models/general",
+  "label_column": "lst_class",
+  "drop_columns": [
+    "lakeN",
+    "lst_raw",
+    "lst_filt",
+    "raamap",
+    "vzamap",
+    "szamap"
+  ],
+  "random_state": 42,
+  "cv_splits": 5,
+  "scoring": "accuracy",
+  "n_trials_dt": 80,
+  "n_trials_rf": 120,
+  "n_trials_xgb": 120,
+  "optuna_n_jobs": 1
+}

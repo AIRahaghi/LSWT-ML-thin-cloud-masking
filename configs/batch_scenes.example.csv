@@ -1,0 +1,2 @@
+scene_path,lake_geojson,lake_key,rf_model,xgb_model,dt_model,output_dir
+E:/Trishna/Landsat_processing/Landsat_C2/Geneva_L1/LC08_L1TP_195028_20240705_20240712_02_T1,data/lake_geneva_simple.geojson,geneva,models/general/RF_best_all_general.pkl,models/general/XGB_best_all_general.pkl,,outputs/batch/geneva_20240705

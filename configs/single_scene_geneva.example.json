@@ -1,0 +1,8 @@
+{
+  "scene": "E:/Trishna/Landsat_processing/Landsat_C2/Geneva_L1/LC08_L1TP_195028_20240705_20240712_02_T1",
+  "lake_geojson": "data/lake_geneva_simple.geojson",
+  "lake_key": "geneva",
+  "rf_model": "models/general/RF_best_all_general.pkl",
+  "xgb_model": "models/general/XGB_best_all_general.pkl",
+  "output_dir": "outputs/geneva_20240705"
+}
