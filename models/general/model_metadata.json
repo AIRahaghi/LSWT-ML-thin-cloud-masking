@@ -1,0 +1,58 @@
+{
+  "config": {
+    "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_train_all.csv",
+    "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_test_all.csv",
+    "output_dir": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/models/general",
+    "label_column": "lst_class",
+    "drop_columns": [
+      "lakeN",
+      "lst_raw",
+      "lst_filt",
+      "raamap",
+      "vzamap",
+      "szamap"
+    ],
+    "random_state": 42,
+    "cv_splits": 5,
+    "scoring": "balanced_accuracy",
+    "n_trials_dt": 80,
+    "n_trials_rf": 120,
+    "n_trials_xgb": 120,
+    "optuna_n_jobs": 1
+  },
+  "feature_columns": [
+    "bluemap",
+    "greenmap",
+    "redmap",
+    "nirmap",
+    "swirmap1",
+    "swirmap2",
+    "cirrusmap",
+    "aerosolmap",
+    "btmap1",
+    "btmap2",
+    "hotmap",
+    "whitenessmap",
+    "ndsimap1",
+    "ndsimap2",
+    "ndvimap",
+    "ndwimap",
+    "mndwimap1",
+    "mndwimap2",
+    "waterratiomap1",
+    "waterratiomap2",
+    "brtestmap1",
+    "brtestmap2"
+  ],
+  "class_labels": {
+    "1": "thin_cloud",
+    "2": "cloud_affected",
+    "3": "water"
+  },
+  "xgboost_label_shift": "XGBoost is trained with labels 0,1,2 and shifted back to 1,2,3 at prediction time.",
+  "model_paths": {
+    "decision_tree": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/models/general/DT_best_all_general.pkl",
+    "random_forest": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/models/general/RF_best_all_general.pkl",
+    "xgboost": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/models/general/XGB_best_all_general.pkl"
+  }
+}
