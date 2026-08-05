@@ -1,5 +1,5 @@
 {
-  "landsat_c2_root": "/Volumes/YOUR_EXTERNAL_DRIVE/Trishna/Landsat_processing/Landsat_C2",
+  "landsat_c2_root": "/Volumes/Elements/Trishna/Landsat_processing/Landsat_C2",
   "lake_geojson": "data/lakes_cloud_masking.geojson",
   "models_dir": "models/general",
   "output_l1_dir": "data/landsat_l1_tables",
