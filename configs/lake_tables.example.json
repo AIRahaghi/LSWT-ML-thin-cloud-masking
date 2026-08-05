@@ -1,0 +1,74 @@
+{
+  "landsat_c2_root": "/Volumes/YOUR_EXTERNAL_DRIVE/Trishna/Landsat_processing/Landsat_C2",
+  "lake_geojson": "data/lakes_cloud_masking.geojson",
+  "models_dir": "models/general",
+  "output_l1_dir": "data/landsat_l1_tables",
+  "output_l2_dir": "data/landsat_l2_tables",
+  "mask_cloud_classes": [1],
+  "include_cirrus_as_cloud": false,
+  "include_lake_metadata_in_l1": false,
+  "continue_on_error": true,
+  "lakes": [
+    {
+      "output_key": "geneva",
+      "lake_key": "geneva",
+      "lakeN": "geneva",
+      "folder_name": "Geneva",
+      "stations": [
+        {"name": "LXP", "lat": 46.5003, "lon": 6.6609},
+        {"name": "BUC", "lat": 46.454, "lon": 6.399}
+      ],
+      "numpix_xy": 5
+    },
+    {
+      "output_key": "aegeri",
+      "lake_key": "ageri",
+      "lakeN": "ageri",
+      "folder_name": "Aegeri",
+      "stations": [
+        {"name": "Buoy", "lat": 47.12486, "lon": 8.60855}
+      ],
+      "numpix_xy": 5
+    },
+    {
+      "output_key": "bianco",
+      "lake_key": "bianco",
+      "lakeN": "bianco",
+      "folder_name": "Bianco",
+      "stations": [
+        {"name": "Buoy", "lat": 46.411859, "lon": 10.014917}
+      ],
+      "numpix_xy": 5
+    },
+    {
+      "output_key": "greifensee",
+      "lake_key": "greifensee",
+      "lakeN": "greifensee",
+      "folder_name": "Greifensee",
+      "stations": [
+        {"name": "Platform", "lat": 47.366, "lon": 8.665}
+      ],
+      "numpix_xy": 5
+    },
+    {
+      "output_key": "mendota",
+      "lake_key": "mendota",
+      "lakeN": "mendota",
+      "folder_name": "Mendota",
+      "stations": [
+        {"name": "Buoy", "lat": 43.0995, "lon": -89.4045}
+      ],
+      "numpix_xy": 5
+    },
+    {
+      "output_key": "venice",
+      "lake_key": "venice",
+      "lakeN": "venice",
+      "folder_name": "Venice",
+      "stations": [
+        {"name": "Platform", "lat": 45.3142467, "lon": 12.5082483}
+      ],
+      "numpix_xy": 5
+    }
+  ]
+}
