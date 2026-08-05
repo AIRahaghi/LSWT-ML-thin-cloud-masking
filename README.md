@@ -18,7 +18,15 @@ Create and activate a Python environment, then install the package in editable m
 pip install -e .
 ```
 
-The geospatial steps require GDAL-compatible `rasterio`. If pip installation struggles on Windows, use a conda environment for `rasterio`, then install the rest with pip.
+For a standalone Windows computer, the most reliable route is usually conda-forge because `rasterio` depends on GDAL/PROJ:
+
+```powershell
+conda env create -f environment.yml
+conda activate lswt-thin-cloud
+pip install -e .
+```
+
+No Landsat download code is included. Scene masking expects pre-downloaded C2L1 scene folders or tar files. The operational Fmask layer is read from the Landsat `QA_PIXEL` band, so a separate Fmask executable is not required for this pipeline.
 
 ## Pipeline 1: Train, Tune, Assess
 
@@ -26,9 +34,15 @@ Edit [configs/training_config.example.json](configs/training_config.example.json
 
 ```powershell
 python scripts/train_tune_assess_models.py `
-  --train-csv "E:/Trishna/Landsat_processing/processed/train_test_all_merged/df_train_all.csv" `
-  --test-csv "E:/Trishna/Landsat_processing/processed/train_test_all_merged/df_test_all.csv" `
+  --train-csv "data/df_train_all.csv" `
+  --test-csv "data/df_test_all.csv" `
   --output-dir "models/general"
+```
+
+With the copied CSV files already under `data/`, this shorter command also works:
+
+```powershell
+python scripts/train_tune_assess_models.py --config "configs/training_config.example.json"
 ```
 
 Outputs include tuned `.pkl` models, Optuna study files, feature metadata, classification reports, confusion matrices, and summary metrics.
@@ -70,6 +84,23 @@ python scripts/mask_batch.py `
 ```
 
 The batch script assumes scenes are already downloaded and never downloads Landsat products.
+
+## Dependencies
+
+Core training dependencies:
+
+- `numpy`, `pandas`
+- `scikit-learn`, `xgboost`, `optuna`, `joblib`
+- `matplotlib`, `seaborn` for reports/plots
+
+Scene and batch masking dependencies:
+
+- `rasterio`, including its GDAL/PROJ runtime stack
+
+Notebook-only dependencies:
+
+- `jupyterlab` or `notebook`
+- `ipykernel`
 
 ## Notebooks
 

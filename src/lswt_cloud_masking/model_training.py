@@ -36,7 +36,7 @@ class TrainingConfig:
     drop_columns: list[str] = field(default_factory=lambda: list(DEFAULT_DROP_COLUMNS))
     random_state: int = 42
     cv_splits: int = 5
-    scoring: str = "accuracy"
+    scoring: str = "balanced_accuracy"
     n_trials_dt: int = 80
     n_trials_rf: int = 120
     n_trials_xgb: int = 120
@@ -143,7 +143,7 @@ def evaluate_classifier(
     cv: StratifiedKFold,
     *,
     xgb_label_shift: bool = False,
-    scoring: str = "accuracy",
+    scoring: str = "balanced_accuracy",
 ) -> dict[str, Any]:
     """Evaluate one fitted classifier on train/test and cross-validation."""
 
@@ -227,7 +227,12 @@ def _fit_random_forest(
 ) -> tuple[optuna.Study | None, RandomForestClassifier]:
     if config.n_trials_rf <= 0:
         model = RandomForestClassifier(
-            n_estimators=200,
+            n_estimators=500,
+            max_depth=30,
+            min_samples_split=5,
+            min_samples_leaf=1,
+            max_features=0.5,
+            criterion="entropy",
             class_weight="balanced",
             random_state=config.random_state,
             n_jobs=-1,
@@ -237,13 +242,14 @@ def _fit_random_forest(
 
     def objective(trial: optuna.Trial) -> float:
         model = RandomForestClassifier(
-            n_estimators=trial.suggest_int("n_estimators", 100, 500),
-            max_depth=trial.suggest_int("max_depth", 6, 20),
+            n_estimators=trial.suggest_int("n_estimators", 300, 1000, step=100),
+            max_depth=trial.suggest_categorical("max_depth", [15, 20, 30, 40, None]),
             min_samples_split=trial.suggest_int("min_samples_split", 2, 10),
             min_samples_leaf=trial.suggest_int("min_samples_leaf", 1, 5),
-            max_features=trial.suggest_categorical("max_features", ["sqrt", "log2", None]),
+            max_features=trial.suggest_categorical("max_features", ["sqrt", "log2", 0.5, 0.7]),
             bootstrap=trial.suggest_categorical("bootstrap", [True, False]),
-            class_weight="balanced",
+            criterion=trial.suggest_categorical("criterion", ["gini", "entropy", "log_loss"]),
+            class_weight=trial.suggest_categorical("class_weight", [None, "balanced", "balanced_subsample"]),
             random_state=config.random_state,
             n_jobs=-1,
         )
@@ -253,7 +259,6 @@ def _fit_random_forest(
     study.optimize(objective, n_trials=config.n_trials_rf, n_jobs=config.optuna_n_jobs)
     model = RandomForestClassifier(
         **study.best_params,
-        class_weight="balanced",
         random_state=config.random_state,
         n_jobs=-1,
     )
@@ -270,14 +275,19 @@ def _fit_xgboost(
     y_train_zero = y_train - 1
     if config.n_trials_xgb <= 0:
         model = xgb.XGBClassifier(
-            n_estimators=300,
-            max_depth=6,
-            learning_rate=0.08,
+            n_estimators=700,
+            max_depth=8,
+            learning_rate=0.05,
             subsample=0.8,
             colsample_bytree=0.8,
+            min_child_weight=3.0,
+            gamma=0.05,
+            reg_alpha=1e-6,
+            reg_lambda=5.0,
             objective="multi:softprob",
             num_class=len(np.unique(y_train_zero)),
             eval_metric="mlogloss",
+            tree_method="hist",
             random_state=config.random_state,
             n_jobs=-1,
         )
@@ -286,15 +296,19 @@ def _fit_xgboost(
 
     def objective(trial: optuna.Trial) -> float:
         model = xgb.XGBClassifier(
-            n_estimators=trial.suggest_int("n_estimators", 200, 500),
-            max_depth=trial.suggest_int("max_depth", 4, 10),
-            learning_rate=trial.suggest_float("learning_rate", 0.03, 0.3, log=True),
-            subsample=trial.suggest_float("subsample", 0.6, 1.0),
+            n_estimators=trial.suggest_int("n_estimators", 300, 1200, step=100),
+            max_depth=trial.suggest_int("max_depth", 4, 12),
+            learning_rate=trial.suggest_float("learning_rate", 0.01, 0.15, log=True),
+            subsample=trial.suggest_float("subsample", 0.7, 1.0),
             colsample_bytree=trial.suggest_float("colsample_bytree", 0.6, 1.0),
-            gamma=trial.suggest_float("gamma", 0.0, 2.0),
+            min_child_weight=trial.suggest_float("min_child_weight", 1.0, 10.0, log=True),
+            gamma=trial.suggest_float("gamma", 0.0, 0.5),
+            reg_alpha=trial.suggest_float("reg_alpha", 1e-8, 1.0, log=True),
+            reg_lambda=trial.suggest_float("reg_lambda", 0.5, 20.0, log=True),
             objective="multi:softprob",
             num_class=len(np.unique(y_train_zero)),
             eval_metric="mlogloss",
+            tree_method="hist",
             random_state=config.random_state,
             n_jobs=-1,
         )
@@ -316,6 +330,7 @@ def _fit_xgboost(
         objective="multi:softprob",
         num_class=len(np.unique(y_train_zero)),
         eval_metric="mlogloss",
+        tree_method="hist",
         random_state=config.random_state,
         n_jobs=-1,
     )
