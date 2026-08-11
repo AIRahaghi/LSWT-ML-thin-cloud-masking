@@ -17,12 +17,15 @@ from sklearn.metrics import (
     balanced_accuracy_score,
     classification_report,
     confusion_matrix,
+    f1_score,
 )
-from sklearn.model_selection import StratifiedKFold, cross_val_score
+from sklearn.base import clone
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.utils.class_weight import compute_sample_weight
 import xgboost as xgb
 
-from .features import CLASS_LABELS, DEFAULT_DROP_COLUMNS, prepare_training_frame
+from .features import CLASS_LABELS, DEFAULT_DROP_COLUMNS
 
 
 @dataclass
@@ -37,6 +40,9 @@ class TrainingConfig:
     random_state: int = 42
     cv_splits: int = 5
     scoring: str = "balanced_accuracy"
+    group_column: str | None = "scene_id"
+    use_grouped_cv: bool = True
+    xgb_sample_weight: str | None = "balanced"
     n_trials_dt: int = 80
     n_trials_rf: int = 120
     n_trials_xgb: int = 120
@@ -55,30 +61,23 @@ def run_training_pipeline(config: TrainingConfig) -> dict[str, Any]:
     output_dir = Path(config.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    x_train, y_train, x_test, y_test, feature_columns = prepare_training_frame(
-        config.train_csv,
-        config.test_csv,
-        label_column=config.label_column,
-        drop_columns=config.drop_columns,
+    x_train, y_train, x_test, y_test, feature_columns, train_groups, test_groups = (
+        _prepare_training_data(config)
     )
 
-    cv = StratifiedKFold(
-        n_splits=config.cv_splits,
-        shuffle=True,
-        random_state=config.random_state,
-    )
+    cv, cv_kind = _make_cv(config, train_groups)
 
     studies: dict[str, optuna.Study | None] = {}
     models: dict[str, Any] = {}
 
     studies["decision_tree"], models["decision_tree"] = _fit_decision_tree(
-        x_train, y_train, cv, config
+        x_train, y_train, cv, train_groups, config
     )
     studies["random_forest"], models["random_forest"] = _fit_random_forest(
-        x_train, y_train, cv, config
+        x_train, y_train, cv, train_groups, config
     )
     studies["xgboost"], models["xgboost"] = _fit_xgboost(
-        x_train, y_train, cv, config
+        x_train, y_train, cv, train_groups, config
     )
 
     model_paths = {
@@ -99,6 +98,7 @@ def run_training_pipeline(config: TrainingConfig) -> dict[str, Any]:
             x_test,
             y_test,
             cv,
+            train_groups=train_groups,
             xgb_label_shift=(name == "xgboost"),
             scoring=config.scoring,
         )
@@ -118,7 +118,12 @@ def run_training_pipeline(config: TrainingConfig) -> dict[str, Any]:
         "config": asdict(config),
         "feature_columns": feature_columns,
         "class_labels": CLASS_LABELS,
+        "cv_kind": cv_kind,
+        "train_groups": _group_summary(train_groups),
+        "test_groups": _group_summary(test_groups),
+        "train_test_group_overlap": _group_overlap(train_groups, test_groups),
         "xgboost_label_shift": "XGBoost is trained with labels 0,1,2 and shifted back to 1,2,3 at prediction time.",
+        "xgboost_sample_weight": config.xgb_sample_weight,
         "model_paths": {name: str(path) for name, path in model_paths.items()},
     }
 
@@ -140,8 +145,9 @@ def evaluate_classifier(
     y_train: pd.Series,
     x_test: pd.DataFrame,
     y_test: pd.Series,
-    cv: StratifiedKFold,
+    cv: StratifiedKFold | StratifiedGroupKFold,
     *,
+    train_groups: pd.Series | None = None,
     xgb_label_shift: bool = False,
     scoring: str = "balanced_accuracy",
 ) -> dict[str, Any]:
@@ -155,13 +161,13 @@ def evaluate_classifier(
     pred_train = pred_train_model + 1 if xgb_label_shift else pred_train_model
     pred_test = pred_test_model + 1 if xgb_label_shift else pred_test_model
 
-    cv_scores = cross_val_score(
+    cv_scores = _cross_val_scores(
         model,
         x_train,
         y_train_model,
         cv=cv,
         scoring=scoring,
-        n_jobs=-1,
+        groups=train_groups,
     )
 
     labels = [1, 2, 3]
@@ -193,11 +199,15 @@ def evaluate_classifier(
 def _fit_decision_tree(
     x_train: pd.DataFrame,
     y_train: pd.Series,
-    cv: StratifiedKFold,
+    cv: StratifiedKFold | StratifiedGroupKFold,
+    groups: pd.Series | None,
     config: TrainingConfig,
 ) -> tuple[optuna.Study | None, DecisionTreeClassifier]:
     if config.n_trials_dt <= 0:
-        model = DecisionTreeClassifier(random_state=config.random_state)
+        model = DecisionTreeClassifier(
+            class_weight="balanced",
+            random_state=config.random_state,
+        )
         model.fit(x_train, y_train)
         return None, model
 
@@ -208,9 +218,10 @@ def _fit_decision_tree(
             min_samples_leaf=trial.suggest_int("min_samples_leaf", 1, 10),
             criterion=trial.suggest_categorical("criterion", ["gini", "entropy", "log_loss"]),
             splitter=trial.suggest_categorical("splitter", ["best", "random"]),
+            class_weight=trial.suggest_categorical("class_weight", [None, "balanced"]),
             random_state=config.random_state,
         )
-        return float(cross_val_score(model, x_train, y_train, cv=cv, scoring=config.scoring).mean())
+        return float(_cross_val_scores(model, x_train, y_train, cv, config.scoring, groups).mean())
 
     study = optuna.create_study(direction="maximize", study_name="DecisionTree_Optimization")
     study.optimize(objective, n_trials=config.n_trials_dt, n_jobs=config.optuna_n_jobs)
@@ -222,7 +233,8 @@ def _fit_decision_tree(
 def _fit_random_forest(
     x_train: pd.DataFrame,
     y_train: pd.Series,
-    cv: StratifiedKFold,
+    cv: StratifiedKFold | StratifiedGroupKFold,
+    groups: pd.Series | None,
     config: TrainingConfig,
 ) -> tuple[optuna.Study | None, RandomForestClassifier]:
     if config.n_trials_rf <= 0:
@@ -253,7 +265,7 @@ def _fit_random_forest(
             random_state=config.random_state,
             n_jobs=-1,
         )
-        return float(cross_val_score(model, x_train, y_train, cv=cv, scoring=config.scoring).mean())
+        return float(_cross_val_scores(model, x_train, y_train, cv, config.scoring, groups).mean())
 
     study = optuna.create_study(direction="maximize", study_name="RandomForest_Optimization")
     study.optimize(objective, n_trials=config.n_trials_rf, n_jobs=config.optuna_n_jobs)
@@ -269,10 +281,12 @@ def _fit_random_forest(
 def _fit_xgboost(
     x_train: pd.DataFrame,
     y_train: pd.Series,
-    cv: StratifiedKFold,
+    cv: StratifiedKFold | StratifiedGroupKFold,
+    groups: pd.Series | None,
     config: TrainingConfig,
 ) -> tuple[optuna.Study | None, xgb.XGBClassifier]:
     y_train_zero = y_train - 1
+    final_sample_weight = _sample_weight(y_train_zero, config.xgb_sample_weight)
     if config.n_trials_xgb <= 0:
         model = xgb.XGBClassifier(
             n_estimators=700,
@@ -291,7 +305,7 @@ def _fit_xgboost(
             random_state=config.random_state,
             n_jobs=-1,
         )
-        model.fit(x_train, y_train_zero)
+        model.fit(x_train, y_train_zero, sample_weight=final_sample_weight)
         return None, model
 
     def objective(trial: optuna.Trial) -> float:
@@ -313,13 +327,14 @@ def _fit_xgboost(
             n_jobs=-1,
         )
         return float(
-            cross_val_score(
+            _cross_val_scores(
                 model,
                 x_train,
                 y_train_zero,
-                cv=cv,
-                scoring=config.scoring,
-                n_jobs=-1,
+                cv,
+                config.scoring,
+                groups,
+                sample_weight_mode=config.xgb_sample_weight,
             ).mean()
         )
 
@@ -334,8 +349,114 @@ def _fit_xgboost(
         random_state=config.random_state,
         n_jobs=-1,
     )
-    model.fit(x_train, y_train_zero)
+    model.fit(x_train, y_train_zero, sample_weight=final_sample_weight)
     return study, model
+
+
+def _prepare_training_data(
+    config: TrainingConfig,
+) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series, list[str], pd.Series | None, pd.Series | None]:
+    train_df = pd.read_csv(config.train_csv)
+    test_df = pd.read_csv(config.test_csv)
+
+    group_column = config.group_column
+    if group_column and (group_column not in train_df.columns or group_column not in test_df.columns):
+        group_column = None
+
+    drop_columns = set(config.drop_columns)
+    if group_column:
+        drop_columns.add(group_column)
+
+    def _split(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series, pd.Series | None]:
+        y = pd.to_numeric(df[config.label_column], errors="coerce")
+        groups = df[group_column].astype(str) if group_column else None
+        x = df.drop(columns=[config.label_column]).drop(columns=list(drop_columns), errors="ignore")
+        x = x.apply(pd.to_numeric, errors="coerce")
+        keep = y.notna() & x.notna().all(axis=1)
+        x_out = x.loc[keep].copy()
+        y_out = y.loc[keep].astype(int).copy()
+        groups_out = groups.loc[keep].copy() if groups is not None else None
+        return x_out, y_out, groups_out
+
+    x_train, y_train, train_groups = _split(train_df)
+    x_test, y_test, test_groups = _split(test_df)
+    feature_columns = list(x_train.columns)
+
+    missing_test = [col for col in feature_columns if col not in x_test.columns]
+    if missing_test:
+        raise ValueError(f"Test CSV is missing feature columns found in training CSV: {missing_test}")
+
+    return x_train, y_train, x_test[feature_columns], y_test, feature_columns, train_groups, test_groups
+
+
+def _make_cv(
+    config: TrainingConfig,
+    groups: pd.Series | None,
+) -> tuple[StratifiedKFold | StratifiedGroupKFold, str]:
+    if config.use_grouped_cv and groups is not None and groups.nunique() >= config.cv_splits:
+        return (
+            StratifiedGroupKFold(
+                n_splits=config.cv_splits,
+                shuffle=True,
+                random_state=config.random_state,
+            ),
+            f"StratifiedGroupKFold grouped by {config.group_column}",
+        )
+    return (
+        StratifiedKFold(
+            n_splits=config.cv_splits,
+            shuffle=True,
+            random_state=config.random_state,
+        ),
+        "StratifiedKFold",
+    )
+
+
+def _cross_val_scores(
+    model: Any,
+    x: pd.DataFrame,
+    y: pd.Series,
+    cv: StratifiedKFold | StratifiedGroupKFold,
+    scoring: str,
+    groups: pd.Series | None = None,
+    sample_weight_mode: str | None = None,
+) -> np.ndarray:
+    scores: list[float] = []
+    split_groups = groups if isinstance(cv, StratifiedGroupKFold) else None
+
+    for train_index, valid_index in cv.split(x, y, split_groups):
+        fitted = clone(model)
+        x_train_fold = x.iloc[train_index]
+        y_train_fold = y.iloc[train_index]
+        fit_kwargs = {}
+        weights = _sample_weight(y_train_fold, sample_weight_mode)
+        if weights is not None:
+            fit_kwargs["sample_weight"] = weights
+        fitted.fit(x_train_fold, y_train_fold, **fit_kwargs)
+        pred = fitted.predict(x.iloc[valid_index])
+        scores.append(_score_predictions(y.iloc[valid_index], pred, scoring))
+
+    return np.asarray(scores, dtype="float64")
+
+
+def _sample_weight(y: pd.Series, mode: str | None) -> np.ndarray | None:
+    if mode is None:
+        return None
+    if mode != "balanced":
+        raise ValueError(f"Unsupported sample-weight mode: {mode}")
+    return compute_sample_weight(class_weight="balanced", y=y)
+
+
+def _score_predictions(y_true: pd.Series, y_pred: np.ndarray, scoring: str) -> float:
+    if scoring == "accuracy":
+        return float(accuracy_score(y_true, y_pred))
+    if scoring == "balanced_accuracy":
+        return float(balanced_accuracy_score(y_true, y_pred))
+    if scoring == "f1_macro":
+        return float(f1_score(y_true, y_pred, average="macro", zero_division=0))
+    raise ValueError(
+        f"Unsupported scoring '{scoring}'. Use 'balanced_accuracy', 'accuracy', or 'f1_macro'."
+    )
 
 
 def _producer_user_accuracy(cm: np.ndarray, labels: list[int]) -> dict[str, dict[str, float | None]]:
@@ -363,6 +484,28 @@ def _binary_cloud_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, f
         "accuracy": (tp + tn) / cm.sum() if cm.sum() else None,
         "producer_accuracy_cloud": tp / (tp + fn) if (tp + fn) else None,
         "user_accuracy_cloud": tp / (tp + fp) if (tp + fp) else None,
+    }
+
+
+def _group_summary(groups: pd.Series | None) -> dict[str, int | None]:
+    if groups is None:
+        return {"n_groups": None}
+    return {
+        "n_groups": int(groups.nunique()),
+        "n_rows_with_groups": int(groups.notna().sum()),
+    }
+
+
+def _group_overlap(
+    train_groups: pd.Series | None,
+    test_groups: pd.Series | None,
+) -> dict[str, int | list[str] | None]:
+    if train_groups is None or test_groups is None:
+        return {"n_overlap": None, "examples": None}
+    overlap = sorted(set(train_groups.astype(str)).intersection(set(test_groups.astype(str))))
+    return {
+        "n_overlap": len(overlap),
+        "examples": overlap[:10],
     }
 
 

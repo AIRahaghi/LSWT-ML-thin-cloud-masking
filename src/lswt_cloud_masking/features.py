@@ -41,6 +41,7 @@ MODEL_FEATURE_NAMES = RAW_FEATURE_NAMES + SPECTRAL_INDEX_NAMES
 
 DEFAULT_DROP_COLUMNS = [
     "lakeN",
+    "scene_id",
     "lst_raw",
     "lst_filt",
     "raamap",
