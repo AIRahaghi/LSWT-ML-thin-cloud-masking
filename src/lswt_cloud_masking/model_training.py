@@ -100,6 +100,7 @@ def run_training_pipeline(config: TrainingConfig) -> dict[str, Any]:
             cv,
             train_groups=train_groups,
             xgb_label_shift=(name == "xgboost"),
+            sample_weight_mode=config.xgb_sample_weight if name == "xgboost" else None,
             scoring=config.scoring,
         )
         for name, model in models.items()
@@ -149,6 +150,7 @@ def evaluate_classifier(
     *,
     train_groups: pd.Series | None = None,
     xgb_label_shift: bool = False,
+    sample_weight_mode: str | None = None,
     scoring: str = "balanced_accuracy",
 ) -> dict[str, Any]:
     """Evaluate one fitted classifier on train/test and cross-validation."""
@@ -168,6 +170,7 @@ def evaluate_classifier(
         cv=cv,
         scoring=scoring,
         groups=train_groups,
+        sample_weight_mode=sample_weight_mode,
     )
 
     labels = [1, 2, 3]

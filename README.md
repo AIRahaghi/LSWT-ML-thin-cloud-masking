@@ -48,6 +48,10 @@ python scripts/train_tune_assess_models.py --config "configs/training_config.exa
 
 Outputs include tuned `.pkl` models, Optuna study files, feature metadata, classification reports, confusion matrices, and summary metrics.
 
+If `scene_id` is present in the train/test CSV files, the training pipeline uses `StratifiedGroupKFold` for Optuna tuning and cross-validation. This keeps pixels from the same scene in the same fold and gives a more realistic estimate of scene-to-scene generalization. The `scene_id` column is metadata only and is automatically excluded from model features.
+
+For the strictest independent test, construct `df_test_all.csv` from scenes that are absent from `df_train_all.csv`. If the same `scene_id`s appear in both files, the test metrics should be interpreted as pixel-level test metrics rather than fully scene-independent metrics.
+
 ## Pipeline 2: One C2L1 Scene
 
 Use a scene folder or `.tar` containing the Landsat C2L1 files (`*_B1.TIF`, `*_B2.TIF`, ..., `*_B11.TIF`, `*_QA_PIXEL.TIF`, `*_MTL.txt` or `*_MTL.json`):
