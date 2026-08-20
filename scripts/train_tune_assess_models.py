@@ -17,15 +17,34 @@ def parse_args() -> argparse.Namespace:
         description="Tune and assess DT, RF, and XGBoost thin-cloud classifiers."
     )
     parser.add_argument("--config", help="JSON config file.")
-    parser.add_argument("--train-csv", help="Training CSV, for example df_train_all.csv.")
-    parser.add_argument("--test-csv", help="Independent test CSV, for example df_test_all.csv.")
+    parser.add_argument("--train-csv", help="Training CSV (80 percent split).")
+    parser.add_argument("--test-csv", help="Familiar-scene test CSV (10 percent split).")
+    parser.add_argument(
+        "--los-test-csv",
+        help="Leave-out-of-scene test CSV (10 percent); scene IDs must be absent elsewhere.",
+    )
     parser.add_argument("--output-dir", help="Folder for models and reports.")
     parser.add_argument("--label-column", default=None, help="Label column. Default: lst_class.")
     parser.add_argument("--cv-splits", type=int, default=None, help="Stratified CV folds.")
     parser.add_argument("--scoring", default=None, help="scikit-learn scoring metric.")
-    parser.add_argument("--n-trials-dt", type=int, default=None, help="Optuna trials for Decision Tree.")
-    parser.add_argument("--n-trials-rf", type=int, default=None, help="Optuna trials for Random Forest.")
-    parser.add_argument("--n-trials-xgb", type=int, default=None, help="Optuna trials for XGBoost.")
+    parser.add_argument(
+        "--n-trials-dt",
+        type=int,
+        default=None,
+        help="Decision Tree Optuna trials per tuning CV seed.",
+    )
+    parser.add_argument(
+        "--n-trials-rf",
+        type=int,
+        default=None,
+        help="Random Forest Optuna trials per tuning CV seed.",
+    )
+    parser.add_argument(
+        "--n-trials-xgb",
+        type=int,
+        default=None,
+        help="XGBoost Optuna trials per tuning CV seed.",
+    )
     parser.add_argument("--no-tuning", action="store_true", help="Fit default models without Optuna.")
     return parser.parse_args()
 
@@ -46,6 +65,7 @@ def main() -> None:
     for arg_name, field_name in [
         ("train_csv", "train_csv"),
         ("test_csv", "test_csv"),
+        ("los_test_csv", "los_test_csv"),
         ("output_dir", "output_dir"),
         ("label_column", "label_column"),
         ("cv_splits", "cv_splits"),
@@ -66,9 +86,36 @@ def main() -> None:
     result = run_training_pipeline(config)
     summary = {
         name: {
+            "train_accuracy": metrics["datasets"]["train"]["accuracy"],
             "test_accuracy": metrics["test_accuracy"],
+            "los_test_accuracy": metrics.get("los_test_accuracy"),
             "test_balanced_accuracy": metrics["test_balanced_accuracy"],
-            "cv_mean": metrics["cv_mean"],
+            "los_test_balanced_accuracy": metrics.get("los_test_balanced_accuracy"),
+            "scene_grouped_cv_accuracy_mean": metrics["cross_validation"]
+            .get("scene_grouped", {})
+            .get("accuracy", {})
+            .get("mean"),
+            "scene_grouped_cv_overall_accuracy": metrics["cross_validation"]
+            .get("scene_grouped", {})
+            .get("accuracy", {})
+            .get("pooled"),
+            "pixel_stratified_cv_accuracy_mean": metrics["cross_validation"]
+            .get("pixel_stratified", {})
+            .get("accuracy", {})
+            .get("mean"),
+            "pixel_stratified_cv_overall_accuracy": metrics["cross_validation"]
+            .get("pixel_stratified", {})
+            .get("accuracy", {})
+            .get("pooled"),
+            "selection_repeated_grouped_mean": result["metadata"]["model_selection"][
+                name
+            ].get("selected_mean_score"),
+            "selection_repeated_grouped_std": result["metadata"]["model_selection"][
+                name
+            ].get("selected_std_score"),
+            "selection_stability_score": result["metadata"]["model_selection"][
+                name
+            ].get("selected_stability_score"),
         }
         for name, metrics in result["metrics"].items()
     }

@@ -1,0 +1,8 @@
+{
+  "split_config": "configs/training_split.example.json",
+  "training_config": "configs/training_config.example.json",
+  "output_dir": "outputs/training_sensitivity_80_10_10",
+  "split_seeds": [42, 142, 242, 342, 442],
+  "training_overrides": {},
+  "resume_completed_runs": true
+}
