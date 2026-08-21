@@ -227,6 +227,21 @@ def load_general_models(model_dir: str | Path) -> dict[str, Any]:
     return models
 
 
+def _normalize_table_selection(tables: str) -> str:
+    value = str(tables).strip().lower().replace("-", "_")
+    aliases = {
+        "all": "both",
+        "l1_l2": "both",
+        "l1+l2": "both",
+        "l2_only": "l2",
+        "l1_only": "l1",
+    }
+    value = aliases.get(value, value)
+    if value not in {"both", "l1", "l2"}:
+        raise ValueError("tables must be one of: 'both', 'l1', or 'l2'.")
+    return value
+
+
 def generate_all_lake_tables(
     *,
     landsat_root: str | Path,
@@ -241,9 +256,11 @@ def generate_all_lake_tables(
     include_lake_metadata_in_l1: bool = False,
     limit_scenes: int | None = None,
     continue_on_error: bool = False,
+    tables: str = "both",
 ) -> list[dict[str, Any]]:
     """Generate L1 and L2 tables for several lakes."""
 
+    tables = _normalize_table_selection(tables)
     selected_lakes = lakes or default_lake_configs()
     if only_lakes:
         wanted = {name.lower() for name in only_lakes}
@@ -254,7 +271,7 @@ def generate_all_lake_tables(
             or str(lake.get("lake_key", "")).lower() in wanted
         ]
 
-    models = load_general_models(model_dir)
+    models = load_general_models(model_dir) if tables in {"both", "l2"} else None
     return [
         generate_lake_tables(
             lake=lake,
@@ -269,6 +286,7 @@ def generate_all_lake_tables(
             include_lake_metadata_in_l1=include_lake_metadata_in_l1,
             limit_scenes=limit_scenes,
             continue_on_error=continue_on_error,
+            tables=tables,
         )
         for lake in selected_lakes
     ]
@@ -288,8 +306,13 @@ def generate_lake_tables(
     include_lake_metadata_in_l1: bool = False,
     limit_scenes: int | None = None,
     continue_on_error: bool = False,
+    tables: str = "both",
 ) -> dict[str, Any]:
     """Regenerate one lake's `df_l1_*.csv` and `df_l2_*.csv` files."""
+
+    tables = _normalize_table_selection(tables)
+    run_l1 = tables in {"both", "l1"}
+    run_l2 = tables in {"both", "l2"}
 
     output_key = str(lake.get("output_key", lake["lake_key"])).lower()
     lake_key = str(lake.get("lake_key", output_key)).lower()
@@ -308,53 +331,67 @@ def generate_lake_tables(
     if limit_scenes is not None:
         bundles = bundles[:limit_scenes]
 
-    if models is None:
+    if models is None and run_l2:
         models = load_general_models(model_dir)
-
-    df_l1, l1_failures = generate_l1_table(
-        bundles,
-        lake_name=lake_name_value,
-        geometry=geometry,
-        stations=stations,
-        numpix_xy=numpix_xy,
-        include_cirrus_as_cloud=include_cirrus_as_cloud,
-        include_lake_metadata=include_lake_metadata_in_l1,
-        continue_on_error=continue_on_error,
-    )
-    df_l2, l2_failures = generate_l2_table(
-        bundles,
-        lake_name=lake_name_value,
-        geometry=geometry,
-        stations=stations,
-        numpix_xy=numpix_xy,
-        models=models,
-        mask_cloud_classes=mask_cloud_classes,
-        include_cirrus_as_cloud=include_cirrus_as_cloud,
-        continue_on_error=continue_on_error,
-    )
 
     out_l1 = Path(output_l1_dir)
     out_l2 = Path(output_l2_dir)
-    out_l1.mkdir(parents=True, exist_ok=True)
-    out_l2.mkdir(parents=True, exist_ok=True)
-    l1_csv = out_l1 / f"df_l1_{output_key}.csv"
-    l2_csv = out_l2 / f"df_l2_{output_key}.csv"
-    df_l1.to_csv(l1_csv, index=True, index_label="scene_id")
-    df_l2.to_csv(l2_csv, index=True, index_label="scene_id")
+    df_l1 = None
+    df_l2 = None
+    l1_csv = None
+    l2_csv = None
+    l1_failures: list[dict[str, str]] = []
+    l2_failures: list[dict[str, str]] = []
+
+    if run_l1:
+        df_l1, l1_failures = generate_l1_table(
+            bundles,
+            lake_name=lake_name_value,
+            geometry=geometry,
+            stations=stations,
+            numpix_xy=numpix_xy,
+            include_cirrus_as_cloud=include_cirrus_as_cloud,
+            include_lake_metadata=include_lake_metadata_in_l1,
+            continue_on_error=continue_on_error,
+        )
+        out_l1.mkdir(parents=True, exist_ok=True)
+        l1_csv = out_l1 / f"df_l1_{output_key}.csv"
+        df_l1.to_csv(l1_csv, index=True, index_label="scene_id")
+
+    if run_l2:
+        if models is None:
+            raise ValueError("L2 table generation requires loaded models.")
+        df_l2, l2_failures = generate_l2_table(
+            bundles,
+            lake_name=lake_name_value,
+            geometry=geometry,
+            stations=stations,
+            numpix_xy=numpix_xy,
+            models=models,
+            mask_cloud_classes=mask_cloud_classes,
+            include_cirrus_as_cloud=include_cirrus_as_cloud,
+            continue_on_error=continue_on_error,
+        )
+        out_l2.mkdir(parents=True, exist_ok=True)
+        l2_csv = out_l2 / f"df_l2_{output_key}.csv"
+        df_l2.to_csv(l2_csv, index=True, index_label="scene_id")
 
     report = {
         "lake": output_key,
         "lake_key": lake_key,
         "lakeN": lake_name_value,
+        "tables": tables,
         "folders": {key: str(value) for key, value in folders.items() if value is not None},
-        "l1_csv": str(l1_csv),
-        "l2_csv": str(l2_csv),
-        "l1_rows": int(len(df_l1)),
-        "l2_rows": int(len(df_l2)),
+        "l1_csv": str(l1_csv) if l1_csv is not None else None,
+        "l2_csv": str(l2_csv) if l2_csv is not None else None,
+        "l1_rows": int(len(df_l1)) if df_l1 is not None else None,
+        "l2_rows": int(len(df_l2)) if df_l2 is not None else None,
         "l1_failures": l1_failures,
         "l2_failures": l2_failures,
     }
-    report_path = out_l2 / f"df_landsat_generation_report_{output_key}.json"
+    report_dir = out_l2 if run_l2 else out_l1
+    report_dir.mkdir(parents=True, exist_ok=True)
+    report_path = report_dir / f"df_landsat_generation_report_{output_key}.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     report["report_json"] = str(report_path)
     return report
@@ -734,9 +771,16 @@ def read_raster_crop(
         raster = out_image[0]
         height, width = raster.shape
         rows, cols = np.meshgrid(np.arange(height), np.arange(width), indexing="ij")
-        xs, ys = rasterio.transform.xy(out_transform, rows, cols, offset="center")
-        xs_arr = np.asarray(xs, dtype="float64").reshape(raster.shape)
-        ys_arr = np.asarray(ys, dtype="float64").reshape(raster.shape)
+        xs_arr = (
+            out_transform.c
+            + out_transform.a * (cols + 0.5)
+            + out_transform.b * (rows + 0.5)
+        ).astype("float64")
+        ys_arr = (
+            out_transform.f
+            + out_transform.d * (cols + 0.5)
+            + out_transform.e * (rows + 0.5)
+        ).astype("float64")
         if src.crs.to_string() != "EPSG:4326":
             lon_flat, lat_flat = warp_transform(src.crs, "EPSG:4326", xs_arr.ravel(), ys_arr.ravel())
             lon = np.asarray(lon_flat, dtype="float64").reshape(raster.shape)

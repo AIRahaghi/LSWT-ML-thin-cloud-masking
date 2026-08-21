@@ -27,6 +27,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-l1-dir")
     parser.add_argument("--output-l2-dir")
     parser.add_argument(
+        "--tables",
+        choices=["both", "l1", "l2"],
+        help="Which tables to regenerate. Default is config tables value or both.",
+    )
+    parser.add_argument(
         "--lake",
         action="append",
         help="Lake output key to process. Repeat to process multiple lakes. Defaults to all configured lakes.",
@@ -72,6 +77,7 @@ def main() -> None:
     output_l2_dir = args.output_l2_dir or config.get("output_l2_dir") or str(ROOT / "data" / "landsat_l2_tables")
     lakes = config.get("lakes") or default_lake_configs()
     mask_cloud_classes = tuple(args.mask_cloud_class or config.get("mask_cloud_classes", [1]))
+    tables = args.tables or config.get("tables", "both")
 
     reports = generate_all_lake_tables(
         landsat_root=landsat_root,
@@ -88,6 +94,7 @@ def main() -> None:
         ),
         limit_scenes=args.limit_scenes or config.get("limit_scenes"),
         continue_on_error=bool(args.continue_on_error or config.get("continue_on_error", False)),
+        tables=tables,
     )
     print(json.dumps(reports, indent=2))
 
