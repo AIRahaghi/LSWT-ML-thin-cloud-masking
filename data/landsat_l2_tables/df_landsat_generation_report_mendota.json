@@ -1,0 +1,17 @@
+{
+  "lake": "mendota",
+  "lake_key": "mendota",
+  "lakeN": "mendota",
+  "tables": "l2",
+  "folders": {
+    "l1": "/Volumes/Elements/Trishna/Landsat_processing/Landsat_C2/Mendota_L1",
+    "l2_acolite": "/Volumes/Elements/Trishna/Landsat_processing/Landsat_C2/Mendota_L2_acolite",
+    "l2_usgs": "/Volumes/Elements/Trishna/Landsat_processing/Landsat_C2/Mendota_L2_usgs"
+  },
+  "l1_csv": null,
+  "l2_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/landsat_l2_tables/df_l2_mendota.csv",
+  "l1_rows": null,
+  "l2_rows": 38,
+  "l1_failures": [],
+  "l2_failures": []
+}
