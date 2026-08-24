@@ -1,0 +1,41 @@
+{
+  "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+  "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+  "output_dir": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142",
+  "los_test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+  "label_column": "lst_class",
+  "drop_columns": [
+    "lakeN",
+    "lst_raw",
+    "lst_filt",
+    "raamap",
+    "vzamap",
+    "szamap"
+  ],
+  "random_state": 42,
+  "optuna_seed": 42,
+  "cv_splits": 5,
+  "pixel_cv_splits": 5,
+  "scoring": "balanced_accuracy",
+  "selection_scoring": "balanced_accuracy",
+  "group_column": "scene_id",
+  "use_grouped_cv": true,
+  "require_group_column": true,
+  "evaluate_pixel_cv": true,
+  "xgb_sample_weight": "balanced",
+  "xgb_multi_objective": true,
+  "xgb_selection_group_weight": 0.75,
+  "xgb_max_estimators": 3000,
+  "xgb_early_stopping_rounds": 100,
+  "tuning_cv_seeds": [
+    42,
+    142,
+    242
+  ],
+  "top_candidates_per_run": 8,
+  "stability_penalty": 0.25,
+  "n_trials_dt": 150,
+  "n_trials_rf": 150,
+  "n_trials_xgb": 150,
+  "optuna_n_jobs": 1
+}

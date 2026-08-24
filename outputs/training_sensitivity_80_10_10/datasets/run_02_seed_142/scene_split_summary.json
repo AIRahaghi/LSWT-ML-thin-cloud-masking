@@ -1,0 +1,286 @@
+{
+  "config": {
+    "input_csvs": [
+      "data/df_train_all.csv",
+      "data/df_test_all.csv"
+    ],
+    "train_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+    "test_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+    "los_test_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+    "manifest_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_manifest.csv",
+    "summary_json": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_summary.json",
+    "scene_column": "scene_id",
+    "lake_column": "lakeN",
+    "label_column": "lst_class",
+    "train_fraction": 0.8,
+    "test_fraction": 0.1,
+    "los_fraction": 0.1,
+    "random_state": 142,
+    "los_search_iterations": 100000,
+    "preserve_unique_lake_class_scenes": true,
+    "protected_train_scene_ids": [
+      "LC08_L1TP_196028_20210906_20210915_02_T1"
+    ],
+    "protected_scene_familiar_test_rows": {
+      "LC08_L1TP_196028_20210906_20210915_02_T1": 30
+    }
+  },
+  "input_files": [
+    {
+      "path": "data/df_train_all.csv",
+      "sha256": "b4c74a7240ebbb96ff15713169aafd06c943253890204d73eeb22ab51b5c9577",
+      "rows": 23090
+    },
+    {
+      "path": "data/df_test_all.csv",
+      "sha256": "064150f32e4614757d8a62fffeada408653e6aaa9398db0d7277b22395793fc1",
+      "rows": 5710
+    }
+  ],
+  "total_rows": 28800,
+  "total_scenes": 229,
+  "splits": {
+    "train": {
+      "rows": 23040,
+      "row_fraction": 0.8,
+      "scenes": 206,
+      "class_counts": {
+        "1": 6887,
+        "2": 6697,
+        "3": 9456
+      },
+      "lake_counts": {
+        "ageri": 4603,
+        "bianco": 705,
+        "geneva": 13191,
+        "greifensee": 1250,
+        "mendota": 978,
+        "venice": 2313
+      },
+      "sensor_counts": {
+        "LC08": 15274,
+        "LC09": 7766
+      },
+      "season_counts": {
+        "DJF": 5110,
+        "MAM": 5809,
+        "JJA": 8022,
+        "SON": 4099
+      }
+    },
+    "test": {
+      "rows": 2880,
+      "row_fraction": 0.1,
+      "scenes": 206,
+      "class_counts": {
+        "1": 858,
+        "2": 828,
+        "3": 1194
+      },
+      "lake_counts": {
+        "ageri": 564,
+        "bianco": 92,
+        "geneva": 1659,
+        "greifensee": 156,
+        "mendota": 122,
+        "venice": 287
+      },
+      "sensor_counts": {
+        "LC08": 1910,
+        "LC09": 970
+      },
+      "season_counts": {
+        "DJF": 632,
+        "MAM": 724,
+        "JJA": 996,
+        "SON": 528
+      }
+    },
+    "los_test": {
+      "rows": 2880,
+      "row_fraction": 0.1,
+      "scenes": 23,
+      "class_counts": {
+        "1": 868,
+        "2": 812,
+        "3": 1200
+      },
+      "lake_counts": {
+        "ageri": 680,
+        "bianco": 100,
+        "geneva": 1300,
+        "greifensee": 200,
+        "mendota": 150,
+        "venice": 450
+      },
+      "sensor_counts": {
+        "LC08": 1815,
+        "LC09": 1065
+      },
+      "season_counts": {
+        "DJF": 830,
+        "MAM": 650,
+        "JJA": 700,
+        "SON": 700
+      }
+    }
+  },
+  "scene_overlap": {
+    "train_test": {
+      "n_overlap": 206,
+      "examples": [
+        "LC08_L1TP_024030_20210901_20210909_02_T1",
+        "LC08_L1TP_024030_20220107_20220114_02_T1",
+        "LC08_L1TP_024030_20220328_20220405_02_T1",
+        "LC08_L1TP_024030_20231009_20231017_02_T1",
+        "LC08_L1TP_191028_20240810_20240815_02_T1",
+        "LC08_L1TP_191028_20250813_20250821_02_T1",
+        "LC08_L1TP_191029_20240607_20240627_02_T1",
+        "LC08_L1TP_191029_20240709_20240718_02_T1",
+        "LC08_L1TP_191029_20240810_20240815_02_T1",
+        "LC08_L1TP_191029_20240911_20240914_02_T1"
+      ]
+    },
+    "train_los_test": {
+      "n_overlap": 0,
+      "examples": []
+    },
+    "test_los_test": {
+      "n_overlap": 0,
+      "examples": []
+    }
+  },
+  "coverage": {
+    "train": {
+      "lakes": [
+        "ageri",
+        "bianco",
+        "geneva",
+        "greifensee",
+        "mendota",
+        "venice"
+      ],
+      "classes": [
+        1,
+        2,
+        3
+      ],
+      "sensors": [
+        "LC08",
+        "LC09"
+      ],
+      "seasons": [
+        "DJF",
+        "JJA",
+        "MAM",
+        "SON"
+      ]
+    },
+    "test": {
+      "lakes": [
+        "ageri",
+        "bianco",
+        "geneva",
+        "greifensee",
+        "mendota",
+        "venice"
+      ],
+      "classes": [
+        1,
+        2,
+        3
+      ],
+      "sensors": [
+        "LC08",
+        "LC09"
+      ],
+      "seasons": [
+        "DJF",
+        "JJA",
+        "MAM",
+        "SON"
+      ]
+    },
+    "los_test": {
+      "lakes": [
+        "ageri",
+        "bianco",
+        "geneva",
+        "greifensee",
+        "mendota",
+        "venice"
+      ],
+      "classes": [
+        1,
+        2,
+        3
+      ],
+      "sensors": [
+        "LC08",
+        "LC09"
+      ],
+      "seasons": [
+        "DJF",
+        "JJA",
+        "MAM",
+        "SON"
+      ]
+    }
+  },
+  "protected_train_scene_ids": [
+    "LC08_L1TP_196028_20210906_20210915_02_T1"
+  ],
+  "los_selection": {
+    "search_iterations": 100000,
+    "selected_iteration": 48703,
+    "balance_score": 0.049360139857640234,
+    "n_los_scenes": 23,
+    "target_los_rows": 2880,
+    "scene_ids": [
+      "LC08_L1TP_024030_20231212_20231215_02_T1",
+      "LC08_L1TP_193028_20220718_20220726_02_T1",
+      "LC08_L1TP_194027_20230101_20230110_02_T1",
+      "LC08_L1TP_194027_20250530_20250606_02_T1",
+      "LC08_L1TP_195027_20231108_20231117_02_T1",
+      "LC08_L1TP_195027_20240315_20240401_02_T1",
+      "LC08_L1TP_195027_20240416_20240423_02_T1",
+      "LC08_L1TP_195028_20231108_20231117_02_T1",
+      "LC08_L1TP_195028_20231124_20231129_02_T1",
+      "LC08_L1TP_196028_20170826_20200903_02_T1",
+      "LC08_L1TP_196028_20181016_20200830_02_T1",
+      "LC08_L1TP_196028_20190629_20200827_02_T1",
+      "LC08_L1TP_196028_20210415_20210424_02_T1",
+      "LC08_L1TP_196028_20240525_20240610_02_T1",
+      "LC08_L1TP_196028_20240914_20240920_02_T1",
+      "LC09_L1TP_191029_20240615_20240615_02_T1",
+      "LC09_L1TP_191029_20240717_20240718_02_T1",
+      "LC09_L1TP_192028_20240809_20240809_02_T1",
+      "LC09_L1TP_193028_20220912_20230329_02_T1",
+      "LC09_L1TP_194027_20250215_20250215_02_T1",
+      "LC09_L1TP_195027_20220113_20230502_02_T1",
+      "LC09_L1TP_195028_20220129_20230430_02_T1",
+      "LC09_L1TP_195028_20241204_20241204_02_T1"
+    ],
+    "development_coverage_scene_ids": [
+      "LC08_L1TP_193028_20210613_20210622_02_T1"
+    ]
+  },
+  "output_files": {
+    "train": {
+      "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+      "sha256": "09e5c91e8f38091b0977be2aad4d492aac73ac95fd9bf1859246e8f7fcb2927f"
+    },
+    "test": {
+      "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+      "sha256": "de73adee2dd3082867c21732871d13da371ebe391c2b65bcf66b6a64d3617add"
+    },
+    "los_test": {
+      "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+      "sha256": "c18f279158b561c15f99155ceada78118a36e350f38b496ebb77efc7de9791fc"
+    },
+    "manifest": {
+      "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_manifest.csv",
+      "sha256": "e26cf026f2afce583185f3d36ae8148f261b1b00a25324b5d5bae1457e9d0c3e"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "input_csvs": [
+    "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_train_all.csv",
+    "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_test_all.csv"
+  ],
+  "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+  "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+  "los_test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+  "manifest_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_manifest.csv",
+  "summary_json": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_summary.json",
+  "scene_column": "scene_id",
+  "lake_column": "lakeN",
+  "label_column": "lst_class",
+  "train_fraction": 0.8,
+  "test_fraction": 0.1,
+  "los_fraction": 0.1,
+  "random_state": 142,
+  "los_search_iterations": 100000,
+  "preserve_unique_lake_class_scenes": true,
+  "protected_train_scene_ids": [
+    "LC08_L1TP_196028_20210906_20210915_02_T1"
+  ],
+  "protected_scene_familiar_test_rows": {
+    "LC08_L1TP_196028_20210906_20210915_02_T1": 30
+  }
+}

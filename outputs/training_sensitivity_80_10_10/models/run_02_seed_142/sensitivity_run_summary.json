@@ -1,0 +1,384 @@
+{
+  "fingerprint": "dff247895359d5a829ffed2410fded73b2bed7ae0021dcfd19c4566c0733ee15",
+  "run_index": 2,
+  "run_name": "run_02_seed_142",
+  "split_seed": 142,
+  "split_summary": {
+    "config": {
+      "input_csvs": [
+        "data/df_train_all.csv",
+        "data/df_test_all.csv"
+      ],
+      "train_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+      "test_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+      "los_test_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+      "manifest_csv": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_manifest.csv",
+      "summary_json": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_summary.json",
+      "scene_column": "scene_id",
+      "lake_column": "lakeN",
+      "label_column": "lst_class",
+      "train_fraction": 0.8,
+      "test_fraction": 0.1,
+      "los_fraction": 0.1,
+      "random_state": 142,
+      "los_search_iterations": 100000,
+      "preserve_unique_lake_class_scenes": true,
+      "protected_train_scene_ids": [
+        "LC08_L1TP_196028_20210906_20210915_02_T1"
+      ],
+      "protected_scene_familiar_test_rows": {
+        "LC08_L1TP_196028_20210906_20210915_02_T1": 30
+      }
+    },
+    "input_files": [
+      {
+        "path": "data/df_train_all.csv",
+        "sha256": "b4c74a7240ebbb96ff15713169aafd06c943253890204d73eeb22ab51b5c9577",
+        "rows": 23090
+      },
+      {
+        "path": "data/df_test_all.csv",
+        "sha256": "064150f32e4614757d8a62fffeada408653e6aaa9398db0d7277b22395793fc1",
+        "rows": 5710
+      }
+    ],
+    "total_rows": 28800,
+    "total_scenes": 229,
+    "splits": {
+      "train": {
+        "rows": 23040,
+        "row_fraction": 0.8,
+        "scenes": 206,
+        "class_counts": {
+          "1": 6887,
+          "2": 6697,
+          "3": 9456
+        },
+        "lake_counts": {
+          "ageri": 4603,
+          "bianco": 705,
+          "geneva": 13191,
+          "greifensee": 1250,
+          "mendota": 978,
+          "venice": 2313
+        },
+        "sensor_counts": {
+          "LC08": 15274,
+          "LC09": 7766
+        },
+        "season_counts": {
+          "DJF": 5110,
+          "MAM": 5809,
+          "JJA": 8022,
+          "SON": 4099
+        }
+      },
+      "test": {
+        "rows": 2880,
+        "row_fraction": 0.1,
+        "scenes": 206,
+        "class_counts": {
+          "1": 858,
+          "2": 828,
+          "3": 1194
+        },
+        "lake_counts": {
+          "ageri": 564,
+          "bianco": 92,
+          "geneva": 1659,
+          "greifensee": 156,
+          "mendota": 122,
+          "venice": 287
+        },
+        "sensor_counts": {
+          "LC08": 1910,
+          "LC09": 970
+        },
+        "season_counts": {
+          "DJF": 632,
+          "MAM": 724,
+          "JJA": 996,
+          "SON": 528
+        }
+      },
+      "los_test": {
+        "rows": 2880,
+        "row_fraction": 0.1,
+        "scenes": 23,
+        "class_counts": {
+          "1": 868,
+          "2": 812,
+          "3": 1200
+        },
+        "lake_counts": {
+          "ageri": 680,
+          "bianco": 100,
+          "geneva": 1300,
+          "greifensee": 200,
+          "mendota": 150,
+          "venice": 450
+        },
+        "sensor_counts": {
+          "LC08": 1815,
+          "LC09": 1065
+        },
+        "season_counts": {
+          "DJF": 830,
+          "MAM": 650,
+          "JJA": 700,
+          "SON": 700
+        }
+      }
+    },
+    "scene_overlap": {
+      "train_test": {
+        "n_overlap": 206,
+        "examples": [
+          "LC08_L1TP_024030_20210901_20210909_02_T1",
+          "LC08_L1TP_024030_20220107_20220114_02_T1",
+          "LC08_L1TP_024030_20220328_20220405_02_T1",
+          "LC08_L1TP_024030_20231009_20231017_02_T1",
+          "LC08_L1TP_191028_20240810_20240815_02_T1",
+          "LC08_L1TP_191028_20250813_20250821_02_T1",
+          "LC08_L1TP_191029_20240607_20240627_02_T1",
+          "LC08_L1TP_191029_20240709_20240718_02_T1",
+          "LC08_L1TP_191029_20240810_20240815_02_T1",
+          "LC08_L1TP_191029_20240911_20240914_02_T1"
+        ]
+      },
+      "train_los_test": {
+        "n_overlap": 0,
+        "examples": []
+      },
+      "test_los_test": {
+        "n_overlap": 0,
+        "examples": []
+      }
+    },
+    "coverage": {
+      "train": {
+        "lakes": [
+          "ageri",
+          "bianco",
+          "geneva",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "test": {
+        "lakes": [
+          "ageri",
+          "bianco",
+          "geneva",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "los_test": {
+        "lakes": [
+          "ageri",
+          "bianco",
+          "geneva",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      }
+    },
+    "protected_train_scene_ids": [
+      "LC08_L1TP_196028_20210906_20210915_02_T1"
+    ],
+    "los_selection": {
+      "search_iterations": 100000,
+      "selected_iteration": 48703,
+      "balance_score": 0.049360139857640234,
+      "n_los_scenes": 23,
+      "target_los_rows": 2880,
+      "scene_ids": [
+        "LC08_L1TP_024030_20231212_20231215_02_T1",
+        "LC08_L1TP_193028_20220718_20220726_02_T1",
+        "LC08_L1TP_194027_20230101_20230110_02_T1",
+        "LC08_L1TP_194027_20250530_20250606_02_T1",
+        "LC08_L1TP_195027_20231108_20231117_02_T1",
+        "LC08_L1TP_195027_20240315_20240401_02_T1",
+        "LC08_L1TP_195027_20240416_20240423_02_T1",
+        "LC08_L1TP_195028_20231108_20231117_02_T1",
+        "LC08_L1TP_195028_20231124_20231129_02_T1",
+        "LC08_L1TP_196028_20170826_20200903_02_T1",
+        "LC08_L1TP_196028_20181016_20200830_02_T1",
+        "LC08_L1TP_196028_20190629_20200827_02_T1",
+        "LC08_L1TP_196028_20210415_20210424_02_T1",
+        "LC08_L1TP_196028_20240525_20240610_02_T1",
+        "LC08_L1TP_196028_20240914_20240920_02_T1",
+        "LC09_L1TP_191029_20240615_20240615_02_T1",
+        "LC09_L1TP_191029_20240717_20240718_02_T1",
+        "LC09_L1TP_192028_20240809_20240809_02_T1",
+        "LC09_L1TP_193028_20220912_20230329_02_T1",
+        "LC09_L1TP_194027_20250215_20250215_02_T1",
+        "LC09_L1TP_195027_20220113_20230502_02_T1",
+        "LC09_L1TP_195028_20220129_20230430_02_T1",
+        "LC09_L1TP_195028_20241204_20241204_02_T1"
+      ],
+      "development_coverage_scene_ids": [
+        "LC08_L1TP_193028_20210613_20210622_02_T1"
+      ]
+    },
+    "output_files": {
+      "train": {
+        "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+        "sha256": "09e5c91e8f38091b0977be2aad4d492aac73ac95fd9bf1859246e8f7fcb2927f"
+      },
+      "test": {
+        "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+        "sha256": "de73adee2dd3082867c21732871d13da371ebe391c2b65bcf66b6a64d3617add"
+      },
+      "los_test": {
+        "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+        "sha256": "c18f279158b561c15f99155ceada78118a36e350f38b496ebb77efc7de9791fc"
+      },
+      "manifest": {
+        "path": "outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/scene_split_manifest.csv",
+        "sha256": "e26cf026f2afce583185f3d36ae8148f261b1b00a25324b5d5bae1457e9d0c3e"
+      }
+    }
+  },
+  "results": [
+    {
+      "run_index": 2,
+      "run_name": "run_02_seed_142",
+      "split_seed": 142,
+      "model": "decision_tree",
+      "train_accuracy": 0.5752170138888889,
+      "train_balanced_accuracy": 0.5806702298471004,
+      "train_f1_macro": 0.5759049396415282,
+      "test_inscene_accuracy": 0.5763888888888888,
+      "test_inscene_balanced_accuracy": 0.5832675788432834,
+      "test_inscene_f1_macro": 0.5774620493160177,
+      "los_accuracy": 0.5628472222222223,
+      "los_balanced_accuracy": 0.5569947207655773,
+      "los_f1_macro": 0.5599991625324939,
+      "grouped_cv_balanced_accuracy_mean": 0.5679640733244906,
+      "grouped_cv_balanced_accuracy_std": 0.04215105829826094,
+      "grouped_cv_balanced_accuracy_pooled": 0.5685218770222297,
+      "pixel_cv_balanced_accuracy_mean": 0.5745393211925064,
+      "selection_mean": 0.5671923015681622,
+      "selection_std": 0.03481283254591555,
+      "selection_stability_score": 0.5584890934316834,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"ccp_alpha\": 0.00018255048704519646, \"class_weight\": \"balanced\", \"criterion\": \"gini\", \"max_depth\": 4, \"max_features\": null, \"min_samples_leaf\": 10, \"min_samples_split\": 21, \"splitter\": \"random\"}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+      "test_inscene_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+      "los_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/DT_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/model_metadata.json"
+    },
+    {
+      "run_index": 2,
+      "run_name": "run_02_seed_142",
+      "split_seed": 142,
+      "model": "random_forest",
+      "train_accuracy": 0.7440104166666667,
+      "train_balanced_accuracy": 0.7482448709482862,
+      "train_f1_macro": 0.7417293516193254,
+      "test_inscene_accuracy": 0.7142361111111111,
+      "test_inscene_balanced_accuracy": 0.7154716919846917,
+      "test_inscene_f1_macro": 0.7104882675122971,
+      "los_accuracy": 0.59375,
+      "los_balanced_accuracy": 0.5816929304165122,
+      "los_f1_macro": 0.5845860331550943,
+      "grouped_cv_balanced_accuracy_mean": 0.554263307427133,
+      "grouped_cv_balanced_accuracy_std": 0.031445156873337515,
+      "grouped_cv_balanced_accuracy_pooled": 0.5543331149197469,
+      "pixel_cv_balanced_accuracy_mean": 0.7016451876972467,
+      "selection_mean": 0.566529435338518,
+      "selection_std": 0.03407113476201942,
+      "selection_stability_score": 0.5580116516480131,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"bootstrap\": true, \"class_weight\": \"balanced_subsample\", \"criterion\": \"gini\", \"max_depth\": 10, \"max_features\": \"log2\", \"min_samples_leaf\": 17, \"min_samples_split\": 37, \"n_estimators\": 700}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+      "test_inscene_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+      "los_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/RF_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/model_metadata.json"
+    },
+    {
+      "run_index": 2,
+      "run_name": "run_02_seed_142",
+      "split_seed": 142,
+      "model": "xgboost",
+      "train_accuracy": 0.7146267361111112,
+      "train_balanced_accuracy": 0.72025317765004,
+      "train_f1_macro": 0.7131201713079159,
+      "test_inscene_accuracy": 0.6947916666666667,
+      "test_inscene_balanced_accuracy": 0.6988615390953167,
+      "test_inscene_f1_macro": 0.6926006723725924,
+      "los_accuracy": 0.5909722222222222,
+      "los_balanced_accuracy": 0.5813812966788495,
+      "los_f1_macro": 0.5860641292294075,
+      "grouped_cv_balanced_accuracy_mean": 0.5586659737571983,
+      "grouped_cv_balanced_accuracy_std": 0.03281646598415873,
+      "grouped_cv_balanced_accuracy_pooled": 0.5587715960074918,
+      "pixel_cv_balanced_accuracy_mean": 0.6922461264524964,
+      "selection_mean": 0.570503118192296,
+      "selection_std": 0.02831486078853707,
+      "selection_stability_score": 0.5634244029951617,
+      "final_n_estimators": 30,
+      "selected_parameters": "{\"colsample_bytree\": 0.9265330091805825, \"gamma\": 0.0005401405183560193, \"learning_rate\": 0.08255087431324883, \"max_depth\": 6, \"min_child_weight\": 1.3523635989268643, \"n_estimators\": 30, \"reg_alpha\": 7.933149024371146e-06, \"reg_lambda\": 2.466173115137998, \"subsample\": 0.7795834001600945}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_train_80.csv",
+      "test_inscene_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_inscene_10.csv",
+      "los_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/datasets/run_02_seed_142/df_test_los_10.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/XGB_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/training_sensitivity_80_10_10/models/run_02_seed_142/model_metadata.json"
+    }
+  ]
+}
