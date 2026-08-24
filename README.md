@@ -2,7 +2,7 @@
 Abolfazl Irani Rahaghi, Eawag, Switzerland, 2026
 abolfazl.irani@eawag.ch
 
-This repository restructures the old notebook workflow into three reusable pipelines:
+This repository structures the workflow into three reusable pipelines:
 
 1. Train, tune, and assess the Decision Tree, Random Forest, and XGBoost classifiers from prepared train/test CSV files.
 2. Process one pre-downloaded Landsat-8 or Landsat-9 Collection-2 Level-1 scene over one lake polygon. The output is a cropped Fmask v3 QA layer plus RF and XGBoost thin-cloud layers.
