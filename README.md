@@ -7,7 +7,7 @@ This repository restructures the old notebook workflow into three reusable pipel
 1. Train, tune, and assess the Decision Tree, Random Forest, and XGBoost classifiers from prepared train/test CSV files.
 2. Process one pre-downloaded Landsat-8 or Landsat-9 Collection-2 Level-1 scene over one lake polygon. The output is a cropped Fmask v3 QA layer plus RF and XGBoost thin-cloud layers.
 3. Run the same masking workflow for a batch of pre-downloaded scenes.
-4. Regenerate the manuscript-style `df_l1_*.csv` and `df_l2_*.csv` lake tables from pre-downloaded C2L1/C2L2 products using the tuned models in `models/general/80_10_10`.
+4. Regenerate the manuscript-style `df_l1_*.csv` and `df_l2_*.csv` lake tables from pre-downloaded C2L1/C2L2 products using the selected final models in `models/general`.
 
 The workflow follows the manuscript and old notebooks: operational Landsat `QA_PIXEL` Fmask bits are applied first, then ML classifiers are applied only to pixels that are inside the lake polygon and initially flagged as clear water.
 
@@ -64,6 +64,8 @@ With the copied CSV files already under `data/`, this shorter command also works
 python scripts/train_tune_assess_models.py --config "configs/training_config.example.json"
 ```
 
+The `--output-dir` value is the destination for a standalone training run. The downstream masking and lake-table pipelines expect the selected final model files in `models/general`: `DT_best_all_general.pkl`, `RF_best_all_general.pkl`, and `XGB_best_all_general.pkl`.
+
 Outputs include tuned `.pkl` models, one Optuna study per tuning seed, candidate-ranking CSVs, feature metadata, familiar/LOS classification reports and confusion matrices, and summary metrics. `n_trials_dt`, `n_trials_rf`, and `n_trials_xgb` are trial counts **per tuning seed**, so the default three-seed search performs three times that number for each model. Full tuning is intentionally computationally expensive; use `--no-tuning` only as a basic pipeline check, not for the reported final models.
 
 Each model is tuned independently with the three CV seeds in `tuning_cv_seeds`. The top `top_candidates_per_run` parameter sets from every run are deduplicated and re-evaluated over all repeated scene-grouped folds. Final selection maximizes `mean grouped balanced accuracy - stability_penalty × fold standard deviation`; `selection_scoring` fixes that metric to balanced accuracy and the default penalty is `0.25`. This favors both scene-level accuracy and consistency. DT and RF use scene-grouped tuning throughout. XGBoost retains its grouped + pixel-stratified multi-objective search for candidate discovery, then uses the same repeated grouped stability criterion as DT/RF for final selection. Every XGBoost fold uses early stopping, and the final tree count is the median best iteration over the repeated grouped folds. Neither test CSV participates in tuning, early stopping, or candidate ranking. The `scene_id` column is metadata only and is excluded from model features.
@@ -91,6 +93,8 @@ Smoke runs are recomputed on each invocation, which makes it safe to edit their 
 
 Every realization has the same row fractions and coverage constraints but a different LOS scene allocation and familiar-test pixel allocation. Exact datasets are retained under `outputs/training_sensitivity_80_10_10/datasets/run_*`; all corresponding models, Optuna studies, candidate rankings, and detailed metrics are retained under `outputs/training_sensitivity_80_10_10/models/run_*`. Existing matching completed runs are resumed automatically.
 
+The sensitivity-run folders are archived experiment outputs. After choosing the preferred realization, copy its three final model files from `outputs/training_sensitivity_80_10_10/models/run_*` into `models/general`; the downstream examples below use that canonical model directory.
+
 The referenced split and training JSON files are templates. The sensitivity runner uses `df_train_all.csv` and `df_test_all.csv` as the source rows, overrides the template `train_csv`, `test_csv`, `los_test_csv`, and `output_dir` values for every realization, creates the three run-specific CSVs first, and only then starts tuning. Path overrides through `training_overrides` are rejected to prevent accidental reuse of the canonical `data/df_*_80/10.csv` files.
 
 The two main comparison files are:
@@ -110,8 +114,8 @@ Use a scene folder or `.tar` containing the Landsat C2L1 files (`*_B1.TIF`, `*_B
 python scripts/mask_single_scene.py `
   --scene "E:/Trishna/Landsat_processing/Landsat_C2/Geneva_L1/LC08_L1TP_195028_20240705_20240712_02_T1" `
   --lake-geojson "data/lake_geneva_simple.geojson" `
-  --rf-model "models/general/80_10_10/RF_best_all_general.pkl" `
-  --xgb-model "models/general/80_10_10/XGB_best_all_general.pkl" `
+  --rf-model "models/general/RF_best_all_general.pkl" `
+  --xgb-model "models/general/XGB_best_all_general.pkl" `
   --output-dir "outputs/geneva_20240705"
 ```
 
@@ -151,7 +155,7 @@ This pipeline reproduces the old `df_l1_*.csv` and ML-enhanced `df_l2_*.csv` tab
   Geneva_L2_usgs/
 ```
 
-Edit [configs/lake_tables.example.json](configs/lake_tables.example.json), especially `landsat_c2_root`, then run one lake:
+Edit [configs/lake_tables.example.json](configs/lake_tables.example.json), especially `landsat_c2_root` and `models_dir`. Use `models/general` for the selected final models unless you intentionally want to test a run-specific folder under `outputs/training_sensitivity_80_10_10/models/run_*`. Then run one lake:
 
 ```bash
 python scripts/regenerate_landsat_tables.py \
