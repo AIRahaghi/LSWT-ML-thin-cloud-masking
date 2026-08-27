@@ -1,0 +1,51 @@
+{
+  "input_csvs": [
+    "data/df_train_all.csv",
+    "data/df_test_all.csv"
+  ],
+  "output_dir": "outputs/leave_one_site_out",
+  "held_out_sites": [
+    "ageri",
+    "bianco",
+    "geneva",
+    "greifensee",
+    "mendota",
+    "venice"
+  ],
+  "site_column": "lakeN",
+  "scene_column": "scene_id",
+  "label_column": "lst_class",
+  "drop_columns": [
+    "lakeN",
+    "scene_id",
+    "lst_raw",
+    "lst_filt",
+    "raamap",
+    "vzamap",
+    "szamap"
+  ],
+  "test_fraction": 0.2,
+  "split_random_state": 42,
+  "scene_split_search_iterations": 100000,
+  "scene_split_max_test_fraction_deviation": 0.01,
+  "overlap_exception_scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+  "overlap_exception_site": "geneva",
+  "overlap_exception_class": 3,
+  "overlap_exception_train_rows": 120,
+  "overlap_exception_test_rows": 30,
+  "cv_splits": 5,
+  "cv_random_state": 42,
+  "model_random_state": 42,
+  "optuna_seed": 42,
+  "scoring": "balanced_accuracy",
+  "n_trials_dt": 200,
+  "n_trials_rf": 200,
+  "n_trials_xgb": 200,
+  "optuna_n_jobs": 1,
+  "rf_n_jobs": -1,
+  "xgb_n_jobs": -1,
+  "xgb_sample_weight": "balanced",
+  "xgb_max_estimators": 1500,
+  "xgb_early_stopping_rounds": 250,
+  "resume_completed_runs": true
+}

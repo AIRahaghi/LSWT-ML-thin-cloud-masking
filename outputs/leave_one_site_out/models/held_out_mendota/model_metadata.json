@@ -1,0 +1,211 @@
+{
+  "config": {
+    "input_csvs": [
+      "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_train_all.csv",
+      "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/data/df_test_all.csv"
+    ],
+    "output_dir": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out",
+    "held_out_sites": [
+      "ageri",
+      "bianco",
+      "geneva",
+      "greifensee",
+      "mendota",
+      "venice"
+    ],
+    "site_column": "lakeN",
+    "scene_column": "scene_id",
+    "label_column": "lst_class",
+    "drop_columns": [
+      "lakeN",
+      "scene_id",
+      "lst_raw",
+      "lst_filt",
+      "raamap",
+      "vzamap",
+      "szamap"
+    ],
+    "test_fraction": 0.2,
+    "split_random_state": 42,
+    "scene_split_search_iterations": 100000,
+    "scene_split_max_test_fraction_deviation": 0.01,
+    "overlap_exception_scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+    "overlap_exception_site": "geneva",
+    "overlap_exception_class": 3,
+    "overlap_exception_train_rows": 120,
+    "overlap_exception_test_rows": 30,
+    "cv_splits": 5,
+    "cv_random_state": 42,
+    "model_random_state": 42,
+    "optuna_seed": 42,
+    "scoring": "balanced_accuracy",
+    "n_trials_dt": 200,
+    "n_trials_rf": 200,
+    "n_trials_xgb": 200,
+    "optuna_n_jobs": 1,
+    "rf_n_jobs": -1,
+    "xgb_n_jobs": -1,
+    "xgb_sample_weight": "balanced",
+    "xgb_max_estimators": 1500,
+    "xgb_early_stopping_rounds": 250,
+    "resume_completed_runs": true
+  },
+  "held_out_site": "mendota",
+  "feature_columns": [
+    "bluemap",
+    "greenmap",
+    "redmap",
+    "nirmap",
+    "swirmap1",
+    "swirmap2",
+    "cirrusmap",
+    "aerosolmap",
+    "btmap1",
+    "btmap2",
+    "hotmap",
+    "whitenessmap",
+    "ndsimap1",
+    "ndsimap2",
+    "ndvimap",
+    "ndwimap",
+    "mndwimap1",
+    "mndwimap2",
+    "waterratiomap1",
+    "waterratiomap2",
+    "brtestmap1",
+    "brtestmap2"
+  ],
+  "class_labels": {
+    "1": "thin_cloud",
+    "2": "cloud_affected",
+    "3": "water"
+  },
+  "cv": {
+    "kind": "StratifiedKFold over training pixels",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42,
+    "searches_per_model": 1,
+    "selection_metric": "balanced_accuracy"
+  },
+  "test_used_for_selection": false,
+  "leave_out_site_used_for_selection": false,
+  "xgboost_label_shift": "XGBoost is trained with labels 0,1,2 and evaluated as labels 1,2,3.",
+  "dropped_incomplete_rows": {
+    "train": 0,
+    "test": 0,
+    "leave_out_site": 0
+  },
+  "tuning": {
+    "decision_tree": {
+      "searches": 1,
+      "n_trials": 200,
+      "cv_splits": 5,
+      "scoring": "balanced_accuracy",
+      "best_trial_number": 158,
+      "best_cv_mean": 0.7699871729655512,
+      "best_cv_std": 0.005711624596863914,
+      "best_cv_fold_scores": [
+        0.7657300222145306,
+        0.7795620669150166,
+        0.7630053002182957,
+        0.7720802175932052,
+        0.769558257886708
+      ],
+      "parameters": {
+        "ccp_alpha": 6.1289304257004e-05,
+        "class_weight": "balanced",
+        "criterion": "entropy",
+        "max_depth": 19,
+        "max_features": null,
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 3,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "random_state": 42,
+        "splitter": "best"
+      }
+    },
+    "random_forest": {
+      "searches": 1,
+      "n_trials": 200,
+      "cv_splits": 5,
+      "scoring": "balanced_accuracy",
+      "best_trial_number": 107,
+      "best_cv_mean": 0.8743013367938042,
+      "best_cv_std": 0.0020401968286680107,
+      "best_cv_fold_scores": [
+        0.8769607747801466,
+        0.8759196919904483,
+        0.8710766811536036,
+        0.8734854773269687,
+        0.8740640587178538
+      ],
+      "parameters": {
+        "bootstrap": false,
+        "ccp_alpha": 0.0,
+        "class_weight": "balanced_subsample",
+        "criterion": "log_loss",
+        "max_depth": 24,
+        "max_features": 0.5,
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 1000,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      }
+    },
+    "xgboost": {
+      "searches": 1,
+      "n_trials": 200,
+      "cv_splits": 5,
+      "scoring": "balanced_accuracy",
+      "best_trial_number": 124,
+      "best_cv_mean": 0.8922859989876194,
+      "best_cv_std": 0.0025210990091919525,
+      "best_cv_fold_scores": [
+        0.8898419524878226,
+        0.8935386718205222,
+        0.8906094233200991,
+        0.8966622241446709,
+        0.8907777231649828
+      ],
+      "parameters": {
+        "max_depth": 9,
+        "learning_rate": 0.07453475387909783,
+        "subsample": 0.999662015886639,
+        "colsample_bytree": 0.9700130415733964,
+        "min_child_weight": 0.736600964214173,
+        "gamma": 0.0027907160882013346,
+        "reg_alpha": 0.18658243622797352,
+        "reg_lambda": 0.14061078870389593,
+        "n_estimators": 555
+      },
+      "early_stopping_rounds": 250,
+      "maximum_estimators_during_cv": 1500,
+      "best_trial_fold_iterations": [
+        609,
+        537,
+        555,
+        615,
+        487
+      ],
+      "final_n_estimators": 555
+    }
+  },
+  "model_paths": {
+    "decision_tree": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_mendota/DT_best_all_general.pkl",
+    "random_forest": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_mendota/RF_best_all_general.pkl",
+    "xgboost": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_mendota/XGB_best_all_general.pkl"
+  }
+}

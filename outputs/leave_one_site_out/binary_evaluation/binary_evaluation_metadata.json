@@ -1,0 +1,26 @@
+{
+  "evaluation_only": true,
+  "model_training_or_tuning_performed": false,
+  "loso_output_dir": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out",
+  "source_manifest": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/leave_one_site_out_manifest.json",
+  "n_site_runs": 6,
+  "n_models_per_site": 3,
+  "n_datasets_per_model": 3,
+  "n_evaluations": 54,
+  "class_definition": {
+    "total_cloud": "original classes 1 and 2",
+    "water": "original class 3"
+  },
+  "accuracy_definition": {
+    "total_cloud_accuracy": "correctly predicted total-cloud rows divided by actual total-cloud rows (cloud producer accuracy/recall)",
+    "water_accuracy": "correctly predicted water rows divided by actual water rows (water producer accuracy/recall)",
+    "overall_binary_accuracy": "all correct binary predictions divided by all evaluated rows",
+    "balanced_binary_accuracy": "mean of total_cloud_accuracy and water_accuracy"
+  },
+  "xgboost_label_handling": "Saved XGBoost predictions are shifted from 0/1/2 to 1/2/3 before binary aggregation.",
+  "output_files": {
+    "detailed": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/binary_evaluation/binary_metrics_by_site_model_dataset.csv",
+    "summary": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/binary_evaluation/binary_metrics_summary_by_model_dataset.csv",
+    "comparison": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/binary_evaluation/binary_accuracy_comparison.csv"
+  }
+}

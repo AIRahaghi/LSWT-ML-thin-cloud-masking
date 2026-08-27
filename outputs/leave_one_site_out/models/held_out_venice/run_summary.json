@@ -1,0 +1,353 @@
+{
+  "fingerprint": "cf96ffd4c5bb2dc51069caa7608f5bbe97d1b975567677a01256772814627016",
+  "run_index": 6,
+  "run_name": "held_out_venice",
+  "held_out_site": "venice",
+  "split_summary": {
+    "held_out_site": "venice",
+    "total_rows": 28800,
+    "development_rows": 25750,
+    "requested_train_fraction_within_development": 0.8,
+    "requested_test_fraction_within_development": 0.2,
+    "actual_train_fraction_within_development": 0.7996893203883495,
+    "actual_test_fraction_within_development": 0.20031067961165047,
+    "scene_selection": {
+      "method": "deterministic randomized whole-scene search",
+      "search_iterations": 100000,
+      "selected_iteration": 71779,
+      "balance_score": 0.005484828888695263,
+      "target_test_rows": 5150,
+      "actual_test_rows": 5158,
+      "target_test_fraction": 0.2,
+      "actual_test_fraction": 0.20031067961165047,
+      "maximum_test_fraction_deviation": 0.01,
+      "target_test_scene_count": 41,
+      "whole_test_scene_count": 40,
+      "overlap_exception_scene_count": 1,
+      "actual_test_scene_count": 41,
+      "test_scene_ids_excluding_exception": [
+        "LC08_L1TP_024030_20220328_20220405_02_T1",
+        "LC08_L1TP_193028_20220803_20220806_02_T1",
+        "LC08_L1TP_193028_20250624_20250701_02_T1",
+        "LC08_L1TP_193028_20250710_20250715_02_T1",
+        "LC08_L1TP_194027_20240120_20240129_02_T1",
+        "LC08_L1TP_194027_20241221_20241228_02_T1",
+        "LC08_L1TP_194027_20250428_20250508_02_T1",
+        "LC08_L1TP_194027_20250530_20250606_02_T1",
+        "LC08_L1TP_195027_20221121_20221129_02_T1",
+        "LC08_L1TP_195027_20240518_20240605_02_T1",
+        "LC08_L1TP_195028_20170515_20200904_02_T1",
+        "LC08_L1TP_195028_20200304_20200822_02_T1",
+        "LC08_L1TP_195028_20201030_20201106_02_T1",
+        "LC08_L1TP_195028_20210219_20210302_02_T1",
+        "LC08_L1TP_195028_20240619_20240706_02_T1",
+        "LC08_L1TP_195028_20240705_20240712_02_T1",
+        "LC08_L1TP_196028_20170826_20200903_02_T1",
+        "LC08_L1TP_196028_20171013_20200902_02_T1",
+        "LC08_L1TP_196028_20180626_20200831_02_T1",
+        "LC08_L1TP_196028_20190104_20200829_02_T1",
+        "LC08_L1TP_196028_20190221_20200829_02_T1",
+        "LC08_L1TP_196028_20190629_20200827_02_T1",
+        "LC08_L1TP_196028_20200903_20200918_02_T1",
+        "LC08_L1TP_196028_20201122_20210315_02_T1",
+        "LC08_L1TP_196028_20220621_20220701_02_T1",
+        "LC08_L1TP_196028_20230710_20230718_02_T1",
+        "LC08_L1TP_196028_20240219_20240228_02_T1",
+        "LC08_L1TP_196028_20240712_20240719_02_T1",
+        "LC09_L1TP_024030_20230526_20230526_02_T1",
+        "LC09_L1TP_194027_20220311_20230425_02_T1",
+        "LC09_L1TP_194027_20240128_20240128_02_T1",
+        "LC09_L1TP_194027_20250709_20250709_02_T1",
+        "LC09_L1TP_195027_20230711_20230711_02_T1",
+        "LC09_L1TP_195027_20240510_20240510_02_T1",
+        "LC09_L1TP_195028_20211106_20230507_02_T1",
+        "LC09_L1TP_195028_20220113_20230502_02_T1",
+        "LC09_L1TP_195028_20240119_20240119_02_T1",
+        "LC09_L1TP_195028_20240424_20240424_02_T1",
+        "LC09_L1TP_195028_20250716_20250716_02_T1",
+        "LC09_L1TP_196028_20240906_20240906_02_T1"
+      ],
+      "coverage_components": [
+        "_coverage_site:ageri",
+        "_coverage_site:bianco",
+        "_coverage_site:geneva",
+        "_coverage_site:greifensee",
+        "_coverage_site:mendota",
+        "_coverage_sensor:LC08",
+        "_coverage_sensor:LC09",
+        "_coverage_season:DJF",
+        "_coverage_season:MAM",
+        "_coverage_season:JJA",
+        "_coverage_season:SON",
+        "_coverage_class:1",
+        "_coverage_class:2",
+        "_coverage_class:3"
+      ]
+    },
+    "overlap_exception": {
+      "configured": true,
+      "applied": true,
+      "scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+      "site": "geneva",
+      "class": 3,
+      "train_rows": 120,
+      "test_rows": 30,
+      "allocation_rule": "Rows are ordered by source input and source row; the first configured rows go to training and the remainder go to test."
+    },
+    "splits": {
+      "train": {
+        "rows": 20592,
+        "sites": 5,
+        "site_counts": {
+          "ageri": 4619,
+          "bianco": 747,
+          "geneva": 12970,
+          "greifensee": 1306,
+          "mendota": 950
+        },
+        "scenes": 166,
+        "class_counts": {
+          "1": 6125,
+          "2": 5897,
+          "3": 8570
+        },
+        "sensor_counts": {
+          "LC08": 14091,
+          "LC09": 6501
+        },
+        "season_counts": {
+          "DJF": 5122,
+          "MAM": 4982,
+          "JJA": 6618,
+          "SON": 3870
+        }
+      },
+      "test": {
+        "rows": 5158,
+        "sites": 5,
+        "site_counts": {
+          "ageri": 1228,
+          "bianco": 150,
+          "geneva": 3180,
+          "greifensee": 300,
+          "mendota": 300
+        },
+        "scenes": 41,
+        "class_counts": {
+          "1": 1538,
+          "2": 1490,
+          "3": 2130
+        },
+        "sensor_counts": {
+          "LC08": 3508,
+          "LC09": 1650
+        },
+        "season_counts": {
+          "DJF": 1300,
+          "MAM": 1301,
+          "JJA": 1600,
+          "SON": 957
+        }
+      },
+      "leave_out_site": {
+        "rows": 3050,
+        "sites": 1,
+        "site_counts": {
+          "venice": 3050
+        },
+        "scenes": 23,
+        "class_counts": {
+          "1": 950,
+          "2": 950,
+          "3": 1150
+        },
+        "sensor_counts": {
+          "LC08": 1400,
+          "LC09": 1650
+        },
+        "season_counts": {
+          "DJF": 150,
+          "MAM": 900,
+          "JJA": 1500,
+          "SON": 500
+        }
+      }
+    },
+    "validation": {
+      "row_count": 28800,
+      "held_out_site_exclusive": true,
+      "train_test_scene_overlap_count": 1,
+      "train_test_scene_overlap": [
+        "LC08_L1TP_196028_20210906_20210915_02_T1"
+      ],
+      "only_configured_train_test_overlap": true,
+      "overlap_exception_counts": {
+        "train": 120,
+        "test": 30,
+        "leave_out_site": 0
+      },
+      "shared_acquisition_scene_count": 0,
+      "shared_acquisition_scenes": [],
+      "shared_acquisition_note": "A scene ID may cover more than one lake. Shared IDs do not contain held-out-site pixels in development data; they are reported for audit.",
+      "coverage": {
+        "train": {
+          "sites": [
+            "ageri",
+            "bianco",
+            "geneva",
+            "greifensee",
+            "mendota"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        },
+        "test": {
+          "sites": [
+            "ageri",
+            "bianco",
+            "geneva",
+            "greifensee",
+            "mendota"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        },
+        "leave_out_site": {
+          "sites": [
+            "venice"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "run_index": 6,
+      "run_name": "held_out_venice",
+      "held_out_site": "venice",
+      "model": "decision_tree",
+      "train_accuracy": 0.9853826728826729,
+      "train_balanced_accuracy": 0.9855533797463435,
+      "train_f1_macro": 0.9847654098289413,
+      "test_accuracy": 0.5312136487010469,
+      "test_balanced_accuracy": 0.5176236876062241,
+      "test_f1_macro": 0.5142841579330298,
+      "leave_out_site_accuracy": 0.4698360655737705,
+      "leave_out_site_balanced_accuracy": 0.46161708619374525,
+      "leave_out_site_f1_macro": 0.46309652713859895,
+      "cv_selection_score_mean": 0.7814759281302,
+      "cv_selection_score_std": 0.010566583868265944,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"ccp_alpha\": 1.1366879052106088e-05, \"class_weight\": null, \"criterion\": \"entropy\", \"max_depth\": 28, \"max_features\": null, \"max_leaf_nodes\": null, \"min_impurity_decrease\": 0.0, \"min_samples_leaf\": 1, \"min_samples_split\": 5, \"min_weight_fraction_leaf\": 0.0, \"monotonic_cst\": null, \"random_state\": 42, \"splitter\": \"best\"}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/DT_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/model_metadata.json"
+    },
+    {
+      "run_index": 6,
+      "run_name": "held_out_venice",
+      "held_out_site": "venice",
+      "model": "random_forest",
+      "train_accuracy": 1.0,
+      "train_balanced_accuracy": 1.0,
+      "train_f1_macro": 1.0,
+      "test_accuracy": 0.5643660333462582,
+      "test_balanced_accuracy": 0.5492775671921835,
+      "test_f1_macro": 0.537562355420973,
+      "leave_out_site_accuracy": 0.5222950819672131,
+      "leave_out_site_balanced_accuracy": 0.5124485125858124,
+      "leave_out_site_f1_macro": 0.5089257947939846,
+      "cv_selection_score_mean": 0.8790064137505993,
+      "cv_selection_score_std": 0.004724799858089922,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"bootstrap\": false, \"ccp_alpha\": 0.0, \"class_weight\": \"balanced_subsample\", \"criterion\": \"entropy\", \"max_depth\": null, \"max_features\": 0.5, \"max_leaf_nodes\": null, \"max_samples\": null, \"min_impurity_decrease\": 0.0, \"min_samples_leaf\": 1, \"min_samples_split\": 4, \"min_weight_fraction_leaf\": 0.0, \"monotonic_cst\": null, \"n_estimators\": 400, \"n_jobs\": -1, \"oob_score\": false, \"random_state\": 42, \"verbose\": 0, \"warm_start\": false}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/RF_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/model_metadata.json"
+    },
+    {
+      "run_index": 6,
+      "run_name": "held_out_venice",
+      "held_out_site": "venice",
+      "model": "xgboost",
+      "train_accuracy": 1.0,
+      "train_balanced_accuracy": 1.0,
+      "train_f1_macro": 1.0,
+      "test_accuracy": 0.5676618844513377,
+      "test_balanced_accuracy": 0.5505473183583668,
+      "test_f1_macro": 0.5377721938106127,
+      "leave_out_site_accuracy": 0.5363934426229509,
+      "leave_out_site_balanced_accuracy": 0.5275972540045767,
+      "leave_out_site_f1_macro": 0.5248458115595701,
+      "cv_selection_score_mean": 0.8960939227112655,
+      "cv_selection_score_std": 0.004070747062245759,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": 1409,
+      "selected_parameters": "{\"colsample_bytree\": 0.9561885562565225, \"gamma\": 0.05111235476654027, \"learning_rate\": 0.043835371029625585, \"max_depth\": 10, \"min_child_weight\": 0.8605081718041382, \"n_estimators\": 1409, \"reg_alpha\": 7.657492905728785e-06, \"reg_lambda\": 1.0520202413518331, \"subsample\": 0.8510420108789545}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_venice/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/XGB_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_venice/model_metadata.json"
+    }
+  ]
+}

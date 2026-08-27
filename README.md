@@ -2,7 +2,7 @@
 Abolfazl Irani Rahaghi, Eawag, Switzerland, 2026
 abolfazl.irani@eawag.ch
 
-This repository structures the workflow into three reusable pipelines:
+This repository structures the workflow into four reusable pipelines:
 
 1. Train, tune, and assess the Decision Tree, Random Forest, and XGBoost classifiers from prepared train/test CSV files.
 2. Process one pre-downloaded Landsat-8 or Landsat-9 Collection-2 Level-1 scene over one lake polygon. The output is a cropped Fmask v3 QA layer plus RF and XGBoost thin-cloud layers.
@@ -106,6 +106,40 @@ The two main comparison files are:
 
 The familiar and LOS scores are never supplied to Optuna or candidate selection. Compare their distributions across runs, but do not choose the final model solely from the highest LOS score, because doing so would make LOS part of model selection.
 
+### Leave-one-site-out robustness analysis
+
+The separate, faster leave-one-site-out workflow measures transfer to a completely unseen lake while leaving the existing training pipeline unchanged. It combines `df_train_all.csv` and `df_test_all.csv`, holds out one of the six lakes, and assigns whole scene IDs from the other five lakes to approximately 80% training and 20% test data. Both partitions are validated to contain all five remaining lakes, Landsat 8 and 9, all four seasons, and all three classes. It repeats this once for each lake.
+
+All held-lake pixels are exclusive to its site test. Ageri and Greifensee share six Landsat acquisition IDs because the same acquisitions cover both lakes; the split audit reports these shared IDs, but no held-lake rows enter training or testing.
+
+First run a short one-site check:
+
+```powershell
+python scripts/run_leave_one_site_out.py `
+  --config "configs/leave_one_site_out.example.json" `
+  --smoke-test
+```
+
+Then run all six experiments:
+
+```powershell
+python scripts/run_leave_one_site_out.py `
+  --config "configs/leave_one_site_out.example.json"
+```
+
+Each classifier receives exactly one Optuna study over one fixed five-fold pixel-stratified CV split of the training data. The default is 120 trials per classifier and held-out site; there are no repeated CV seeds, multi-objective passes, or candidate re-ranking runs. Across all six sites this is 10,800 CV fits plus 18 final refits, so it remains a substantial experiment even though it is much smaller than the repeated-search pipeline. XGBoost still uses fold-local early stopping to avoid fitting unnecessary trees. Neither the 20% scene-disjoint test nor the held-out lake is used for tuning or early stopping.
+
+Outputs are isolated under `outputs/leave_one_site_out`:
+
+- `datasets/held_out_<lake>/`: the approximately 80% train, 20% test, and held-out-lake CSVs plus scene-level split and coverage audits.
+- `models/held_out_<lake>/`: final DT/RF/XGBoost models, the single Optuna study and trial table for each model, selected parameters, classification reports, confusion matrices, and train/test/held-out-site metrics.
+- `leave_one_site_out_results.csv`: all 18 lake/model comparisons and exact artifact paths.
+- `leave_one_site_out_summary_by_model.csv`: mean, sample standard deviation, minimum, and maximum balanced accuracy across the six held-out lakes.
+
+Completed matching lake runs resume automatically. Use `--held-out-site geneva` to run only one lake, or `--force` to recompute requested runs. The equivalent notebook is [notebooks/05_leave_one_site_out_validation.ipynb](notebooks/05_leave_one_site_out_validation.ipynb); set `SMOKE_TEST = False` there for the complete six-site run.
+
+After all six model sets have been fitted, [notebooks/06_loso_binary_cloud_water_accuracy.ipynb](notebooks/06_loso_binary_cloud_water_accuracy.ipynb) loads those saved models without retraining and evaluates the binary separation of total cloud (classes 1+2) from water (class 3) on every train, test, and held-out-site dataset.
+
 ## Pipeline 2: One C2L1 Scene
 
 Use a scene folder or `.tar` containing the Landsat C2L1 files (`*_B1.TIF`, `*_B2.TIF`, ..., `*_B11.TIF`, `*_QA_PIXEL.TIF`, `*_MTL.txt` or `*_MTL.json`):
@@ -202,5 +236,7 @@ Notebook-only dependencies:
 - [notebooks/02_lake_geneva_single_scene_masking.ipynb](notebooks/02_lake_geneva_single_scene_masking.ipynb)
 - [notebooks/03_regenerate_landsat_tables_one_lake.ipynb](notebooks/03_regenerate_landsat_tables_one_lake.ipynb)
 - [notebooks/04_regenerate_landsat_tables_batch.ipynb](notebooks/04_regenerate_landsat_tables_batch.ipynb)
+- [notebooks/05_leave_one_site_out_validation.ipynb](notebooks/05_leave_one_site_out_validation.ipynb)
+- [notebooks/06_loso_binary_cloud_water_accuracy.ipynb](notebooks/06_loso_binary_cloud_water_accuracy.ipynb)
 
 The notebooks are thin wrappers around the scripts and package modules. Keep analysis and figures there, but keep reusable logic under `src/lswt_cloud_masking`.

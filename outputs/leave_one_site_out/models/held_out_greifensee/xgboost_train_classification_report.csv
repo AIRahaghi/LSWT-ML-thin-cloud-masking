@@ -1,0 +1,7 @@
+,precision,recall,f1-score,support
+thin_cloud,1.0,1.0,1.0,6624.0
+cloud_affected,1.0,1.0,1.0,6458.0
+water,1.0,1.0,1.0,8670.0
+accuracy,1.0,1.0,1.0,1.0
+macro avg,1.0,1.0,1.0,21752.0
+weighted avg,1.0,1.0,1.0,21752.0

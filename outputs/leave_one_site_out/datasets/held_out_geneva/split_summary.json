@@ -1,0 +1,238 @@
+{
+  "held_out_site": "geneva",
+  "total_rows": 28800,
+  "development_rows": 12650,
+  "requested_train_fraction_within_development": 0.8,
+  "requested_test_fraction_within_development": 0.2,
+  "actual_train_fraction_within_development": 0.8013438735177866,
+  "actual_test_fraction_within_development": 0.19865612648221345,
+  "scene_selection": {
+    "method": "deterministic randomized whole-scene search",
+    "search_iterations": 100000,
+    "selected_iteration": 44889,
+    "balance_score": 0.010937821864268723,
+    "target_test_rows": 2530,
+    "actual_test_rows": 2513,
+    "target_test_fraction": 0.2,
+    "actual_test_fraction": 0.19865612648221345,
+    "maximum_test_fraction_deviation": 0.01,
+    "target_test_scene_count": 22,
+    "whole_test_scene_count": 22,
+    "overlap_exception_scene_count": 0,
+    "actual_test_scene_count": 22,
+    "test_scene_ids_excluding_exception": [
+      "LC08_L1TP_024030_20220328_20220405_02_T1",
+      "LC08_L1TP_191028_20240810_20240815_02_T1",
+      "LC08_L1TP_191029_20240607_20240627_02_T1",
+      "LC08_L1TP_192028_20240411_20240419_02_T1",
+      "LC08_L1TP_193028_20230907_20230912_02_T1",
+      "LC08_L1TP_193028_20250624_20250701_02_T1",
+      "LC08_L1TP_193028_20250710_20250715_02_T1",
+      "LC08_L1TP_194027_20220420_20220427_02_T1",
+      "LC08_L1TP_194027_20231016_20231102_02_T1",
+      "LC08_L1TP_194027_20240730_20240801_02_T1",
+      "LC08_L1TP_194027_20240815_20240822_02_T1",
+      "LC08_L1TP_195027_20221121_20221129_02_T1",
+      "LC08_L1TP_195027_20230905_20230912_02_T1",
+      "LC08_L1TP_195027_20240721_20240723_02_T1",
+      "LC08_L1TP_195027_20240806_20240814_02_T1",
+      "LC08_L1TP_195027_20250113_20250122_02_T1",
+      "LC09_L1TP_024030_20220624_20230409_02_T1",
+      "LC09_L1TP_191029_20240717_20240718_02_T1",
+      "LC09_L1TP_191029_20250517_20250517_02_T1",
+      "LC09_L1TP_194027_20221208_20230318_02_T1",
+      "LC09_L1TP_194027_20231227_20231227_02_T1",
+      "LC09_L1TP_194027_20240229_20240229_02_T1"
+    ],
+    "coverage_components": [
+      "_coverage_site:ageri",
+      "_coverage_site:bianco",
+      "_coverage_site:greifensee",
+      "_coverage_site:mendota",
+      "_coverage_site:venice",
+      "_coverage_sensor:LC08",
+      "_coverage_sensor:LC09",
+      "_coverage_season:DJF",
+      "_coverage_season:MAM",
+      "_coverage_season:JJA",
+      "_coverage_season:SON",
+      "_coverage_class:1",
+      "_coverage_class:2",
+      "_coverage_class:3"
+    ]
+  },
+  "overlap_exception": {
+    "configured": true,
+    "applied": false,
+    "scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+    "site": "geneva",
+    "class": 3,
+    "reason": "The exception site is the held-out site.",
+    "train_rows": 0,
+    "test_rows": 0
+  },
+  "splits": {
+    "train": {
+      "rows": 10137,
+      "sites": 5,
+      "site_counts": {
+        "ageri": 4684,
+        "bianco": 747,
+        "greifensee": 1356,
+        "mendota": 950,
+        "venice": 2400
+      },
+      "scenes": 89,
+      "class_counts": {
+        "1": 2827,
+        "2": 2610,
+        "3": 4700
+      },
+      "sensor_counts": {
+        "LC08": 6322,
+        "LC09": 3815
+      },
+      "season_counts": {
+        "DJF": 1986,
+        "MAM": 2483,
+        "JJA": 4118,
+        "SON": 1550
+      }
+    },
+    "test": {
+      "rows": 2513,
+      "sites": 5,
+      "site_counts": {
+        "ageri": 1163,
+        "bianco": 150,
+        "greifensee": 250,
+        "mendota": 300,
+        "venice": 650
+      },
+      "scenes": 22,
+      "class_counts": {
+        "1": 686,
+        "2": 677,
+        "3": 1150
+      },
+      "sensor_counts": {
+        "LC08": 1627,
+        "LC09": 886
+      },
+      "season_counts": {
+        "DJF": 486,
+        "MAM": 600,
+        "JJA": 1100,
+        "SON": 327
+      }
+    },
+    "leave_out_site": {
+      "rows": 16150,
+      "sites": 1,
+      "site_counts": {
+        "geneva": 16150
+      },
+      "scenes": 118,
+      "class_counts": {
+        "1": 5100,
+        "2": 5050,
+        "3": 6000
+      },
+      "sensor_counts": {
+        "LC08": 11050,
+        "LC09": 5100
+      },
+      "season_counts": {
+        "DJF": 4100,
+        "MAM": 4100,
+        "JJA": 4500,
+        "SON": 3450
+      }
+    }
+  },
+  "validation": {
+    "row_count": 28800,
+    "held_out_site_exclusive": true,
+    "train_test_scene_overlap_count": 0,
+    "train_test_scene_overlap": [],
+    "only_configured_train_test_overlap": true,
+    "overlap_exception_counts": {
+      "train": 0,
+      "test": 0,
+      "leave_out_site": 150
+    },
+    "shared_acquisition_scene_count": 0,
+    "shared_acquisition_scenes": [],
+    "shared_acquisition_note": "A scene ID may cover more than one lake. Shared IDs do not contain held-out-site pixels in development data; they are reported for audit.",
+    "coverage": {
+      "train": {
+        "sites": [
+          "ageri",
+          "bianco",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "test": {
+        "sites": [
+          "ageri",
+          "bianco",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "leave_out_site": {
+        "sites": [
+          "geneva"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      }
+    }
+  }
+}

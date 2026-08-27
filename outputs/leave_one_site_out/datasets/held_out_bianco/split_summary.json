@@ -1,0 +1,257 @@
+{
+  "held_out_site": "bianco",
+  "total_rows": 28800,
+  "development_rows": 27903,
+  "requested_train_fraction_within_development": 0.8,
+  "requested_test_fraction_within_development": 0.2,
+  "actual_train_fraction_within_development": 0.8012758484750744,
+  "actual_test_fraction_within_development": 0.19872415152492565,
+  "scene_selection": {
+    "method": "deterministic randomized whole-scene search",
+    "search_iterations": 100000,
+    "selected_iteration": 59662,
+    "balance_score": 0.007047119821161434,
+    "target_test_rows": 5581,
+    "actual_test_rows": 5545,
+    "target_test_fraction": 0.2,
+    "actual_test_fraction": 0.19872415152492565,
+    "maximum_test_fraction_deviation": 0.01,
+    "target_test_scene_count": 42,
+    "whole_test_scene_count": 41,
+    "overlap_exception_scene_count": 1,
+    "actual_test_scene_count": 42,
+    "test_scene_ids_excluding_exception": [
+      "LC08_L1TP_191028_20240810_20240815_02_T1",
+      "LC08_L1TP_191029_20250813_20250821_02_T1",
+      "LC08_L1TP_194027_20220810_20220818_02_T1",
+      "LC08_L1TP_194027_20230610_20230614_02_T1",
+      "LC08_L1TP_194027_20230813_20230819_02_T1",
+      "LC08_L1TP_194027_20240730_20240801_02_T1",
+      "LC08_L1TP_194027_20250412_20250416_02_T1",
+      "LC08_L1TP_195027_20230905_20230912_02_T1",
+      "LC08_L1TP_195027_20250113_20250122_02_T1",
+      "LC08_L1TP_195027_20250403_20250411_02_T1",
+      "LC08_L1TP_195028_20161206_20200905_02_T1",
+      "LC08_L1TP_195028_20170328_20200904_02_T1",
+      "LC08_L1TP_195028_20170515_20200904_02_T1",
+      "LC08_L1TP_195028_20181212_20200830_02_T1",
+      "LC08_L1TP_195028_20190809_20200827_02_T1",
+      "LC08_L1TP_195028_20200304_20200822_02_T1",
+      "LC08_L1TP_195028_20200912_20200919_02_T1",
+      "LC08_L1TP_195028_20240705_20240712_02_T1",
+      "LC08_L1TP_195028_20250113_20250122_02_T1",
+      "LC08_L1TP_196028_20180322_20200901_02_T1",
+      "LC08_L1TP_196028_20190221_20200829_02_T1",
+      "LC08_L1TP_196028_20190629_20200827_02_T1",
+      "LC08_L1TP_196028_20190917_20200826_02_T1",
+      "LC08_L1TP_196028_20230710_20230718_02_T1",
+      "LC08_L1TP_196028_20240728_20240801_02_T1",
+      "LC08_L1TP_196028_20240930_20241005_02_T1",
+      "LC09_L1TP_023030_20211108_20230506_02_T1",
+      "LC09_L1TP_024030_20211123_20230505_02_T1",
+      "LC09_L1TP_192028_20240809_20240809_02_T1",
+      "LC09_L1TP_192029_20240910_20240910_02_T1",
+      "LC09_L1TP_192029_20250422_20250422_02_T1",
+      "LC09_L1TP_194027_20240128_20240128_02_T1",
+      "LC09_L1TP_194027_20250215_20250215_02_T1",
+      "LC09_L1TP_195027_20230625_20230625_02_T1",
+      "LC09_L1TP_195027_20240510_20240510_02_T1",
+      "LC09_L1TP_195028_20220113_20230502_02_T1",
+      "LC09_L1TP_195028_20240323_20240323_02_T1",
+      "LC09_L1TP_195028_20250529_20250529_02_T1",
+      "LC09_L1TP_196028_20221206_20230318_02_T1",
+      "LC09_L1TP_196028_20231006_20231006_02_T1",
+      "LC09_L1TP_196028_20240618_20240618_02_T1"
+    ],
+    "coverage_components": [
+      "_coverage_site:ageri",
+      "_coverage_site:geneva",
+      "_coverage_site:greifensee",
+      "_coverage_site:mendota",
+      "_coverage_site:venice",
+      "_coverage_sensor:LC08",
+      "_coverage_sensor:LC09",
+      "_coverage_season:DJF",
+      "_coverage_season:MAM",
+      "_coverage_season:JJA",
+      "_coverage_season:SON",
+      "_coverage_class:1",
+      "_coverage_class:2",
+      "_coverage_class:3"
+    ]
+  },
+  "overlap_exception": {
+    "configured": true,
+    "applied": true,
+    "scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+    "site": "geneva",
+    "class": 3,
+    "train_rows": 120,
+    "test_rows": 30,
+    "allocation_rule": "Rows are ordered by source input and source row; the first configured rows go to training and the remainder go to test."
+  },
+  "splits": {
+    "train": {
+      "rows": 22358,
+      "sites": 5,
+      "site_counts": {
+        "ageri": 4682,
+        "geneva": 12920,
+        "greifensee": 1306,
+        "mendota": 1050,
+        "venice": 2400
+      },
+      "scenes": 171,
+      "class_counts": {
+        "1": 6874,
+        "2": 6664,
+        "3": 8820
+      },
+      "sensor_counts": {
+        "LC08": 14772,
+        "LC09": 7586
+      },
+      "season_counts": {
+        "DJF": 5457,
+        "MAM": 5733,
+        "JJA": 7371,
+        "SON": 3797
+      }
+    },
+    "test": {
+      "rows": 5545,
+      "sites": 5,
+      "site_counts": {
+        "ageri": 1165,
+        "geneva": 3230,
+        "greifensee": 300,
+        "mendota": 200,
+        "venice": 650
+      },
+      "scenes": 42,
+      "class_counts": {
+        "1": 1700,
+        "2": 1665,
+        "3": 2180
+      },
+      "sensor_counts": {
+        "LC08": 3430,
+        "LC09": 2115
+      },
+      "season_counts": {
+        "DJF": 1115,
+        "MAM": 1450,
+        "JJA": 1900,
+        "SON": 1080
+      }
+    },
+    "leave_out_site": {
+      "rows": 897,
+      "sites": 1,
+      "site_counts": {
+        "bianco": 897
+      },
+      "scenes": 17,
+      "class_counts": {
+        "1": 39,
+        "2": 8,
+        "3": 850
+      },
+      "sensor_counts": {
+        "LC08": 797,
+        "LC09": 100
+      },
+      "season_counts": {
+        "DJF": 0,
+        "MAM": 0,
+        "JJA": 447,
+        "SON": 450
+      }
+    }
+  },
+  "validation": {
+    "row_count": 28800,
+    "held_out_site_exclusive": true,
+    "train_test_scene_overlap_count": 1,
+    "train_test_scene_overlap": [
+      "LC08_L1TP_196028_20210906_20210915_02_T1"
+    ],
+    "only_configured_train_test_overlap": true,
+    "overlap_exception_counts": {
+      "train": 120,
+      "test": 30,
+      "leave_out_site": 0
+    },
+    "shared_acquisition_scene_count": 0,
+    "shared_acquisition_scenes": [],
+    "shared_acquisition_note": "A scene ID may cover more than one lake. Shared IDs do not contain held-out-site pixels in development data; they are reported for audit.",
+    "coverage": {
+      "train": {
+        "sites": [
+          "ageri",
+          "geneva",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "test": {
+        "sites": [
+          "ageri",
+          "geneva",
+          "greifensee",
+          "mendota",
+          "venice"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "DJF",
+          "JJA",
+          "MAM",
+          "SON"
+        ]
+      },
+      "leave_out_site": {
+        "sites": [
+          "bianco"
+        ],
+        "classes": [
+          1,
+          2,
+          3
+        ],
+        "sensors": [
+          "LC08",
+          "LC09"
+        ],
+        "seasons": [
+          "JJA",
+          "SON"
+        ]
+      }
+    }
+  }
+}

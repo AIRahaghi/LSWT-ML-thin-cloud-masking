@@ -1,0 +1,362 @@
+{
+  "fingerprint": "35fbc53466fd9cb82bfeaf1d2db154502a510ce61726a313bfbd4106642059e4",
+  "run_index": 4,
+  "run_name": "held_out_greifensee",
+  "held_out_site": "greifensee",
+  "split_summary": {
+    "held_out_site": "greifensee",
+    "total_rows": 28800,
+    "development_rows": 27194,
+    "requested_train_fraction_within_development": 0.8,
+    "requested_test_fraction_within_development": 0.2,
+    "actual_train_fraction_within_development": 0.7998823269838935,
+    "actual_test_fraction_within_development": 0.2001176730161065,
+    "scene_selection": {
+      "method": "deterministic randomized whole-scene search",
+      "search_iterations": 100000,
+      "selected_iteration": 76875,
+      "balance_score": 0.005001852300740056,
+      "target_test_rows": 5439,
+      "actual_test_rows": 5442,
+      "target_test_fraction": 0.2,
+      "actual_test_fraction": 0.2001176730161065,
+      "maximum_test_fraction_deviation": 0.01,
+      "target_test_scene_count": 43,
+      "whole_test_scene_count": 42,
+      "overlap_exception_scene_count": 1,
+      "actual_test_scene_count": 43,
+      "test_scene_ids_excluding_exception": [
+        "LC08_L1TP_024030_20210901_20210909_02_T1",
+        "LC08_L1TP_191029_20240607_20240627_02_T1",
+        "LC08_L1TP_191029_20250525_20250603_02_T1",
+        "LC08_L1TP_193028_20210613_20210622_02_T1",
+        "LC08_L1TP_193028_20210901_20210909_02_T1",
+        "LC08_L1TP_193028_20221006_20221013_02_T1",
+        "LC08_L1TP_194027_20230813_20230819_02_T1",
+        "LC08_L1TP_194027_20240120_20240129_02_T1",
+        "LC08_L1TP_194027_20240730_20240801_02_T1",
+        "LC08_L1TP_194027_20240815_20240822_02_T1",
+        "LC08_L1TP_194027_20240831_20240906_02_T1",
+        "LC08_L1TP_195027_20230905_20230912_02_T1",
+        "LC08_L1TP_195028_20160816_20200906_02_T1",
+        "LC08_L1TP_195028_20161206_20200905_02_T1",
+        "LC08_L1TP_195028_20170328_20200904_02_T1",
+        "LC08_L1TP_195028_20170718_20200903_02_T1",
+        "LC08_L1TP_195028_20181212_20200830_02_T1",
+        "LC08_L1TP_195028_20200827_20200905_02_T1",
+        "LC08_L1TP_195028_20201030_20201106_02_T1",
+        "LC08_L1TP_195028_20210219_20210302_02_T1",
+        "LC08_L1TP_195028_20240315_20240401_02_T1",
+        "LC08_L1TP_195028_20240822_20240830_02_T1",
+        "LC08_L1TP_195028_20250708_20250715_02_T1",
+        "LC08_L1TP_196028_20190221_20200829_02_T1",
+        "LC08_L1TP_196028_20190325_20200829_02_T1",
+        "LC08_L1TP_196028_20190917_20200826_02_T1",
+        "LC08_L1TP_196028_20210415_20210424_02_T1",
+        "LC08_L1TP_196028_20230624_20230630_02_T1",
+        "LC08_L1TP_196028_20240509_20240514_02_T1",
+        "LC08_L1TP_196028_20250613_20250626_02_T1",
+        "LC09_L1TP_024030_20211123_20230505_02_T1",
+        "LC09_L1TP_191029_20250517_20250517_02_T1",
+        "LC09_L1TP_192028_20240809_20240809_02_T1",
+        "LC09_L1TP_194027_20231227_20231227_02_T1",
+        "LC09_L1TP_194027_20250215_20250215_02_T1",
+        "LC09_L1TP_195028_20220825_20230401_02_T1",
+        "LC09_L1TP_195028_20240103_20240103_02_T1",
+        "LC09_L1TP_195028_20240323_20240323_02_T1",
+        "LC09_L1TP_195028_20240915_20240915_02_T1",
+        "LC09_L1TP_195028_20250716_20250716_02_T1",
+        "LC09_L1TP_196028_20231006_20231006_02_T1",
+        "LC09_L1TP_196028_20231225_20231225_02_T1"
+      ],
+      "coverage_components": [
+        "_coverage_site:ageri",
+        "_coverage_site:bianco",
+        "_coverage_site:geneva",
+        "_coverage_site:mendota",
+        "_coverage_site:venice",
+        "_coverage_sensor:LC08",
+        "_coverage_sensor:LC09",
+        "_coverage_season:DJF",
+        "_coverage_season:MAM",
+        "_coverage_season:JJA",
+        "_coverage_season:SON",
+        "_coverage_class:1",
+        "_coverage_class:2",
+        "_coverage_class:3"
+      ]
+    },
+    "overlap_exception": {
+      "configured": true,
+      "applied": true,
+      "scene_id": "LC08_L1TP_196028_20210906_20210915_02_T1",
+      "site": "geneva",
+      "class": 3,
+      "train_rows": 120,
+      "test_rows": 30,
+      "allocation_rule": "Rows are ordered by source input and source row; the first configured rows go to training and the remainder go to test."
+    },
+    "splits": {
+      "train": {
+        "rows": 21752,
+        "sites": 5,
+        "site_counts": {
+          "ageri": 4782,
+          "bianco": 700,
+          "geneva": 12870,
+          "mendota": 950,
+          "venice": 2450
+        },
+        "scenes": 172,
+        "class_counts": {
+          "1": 6624,
+          "2": 6458,
+          "3": 8670
+        },
+        "sensor_counts": {
+          "LC08": 14166,
+          "LC09": 7586
+        },
+        "season_counts": {
+          "DJF": 4851,
+          "MAM": 5233,
+          "JJA": 7521,
+          "SON": 4147
+        }
+      },
+      "test": {
+        "rows": 5442,
+        "sites": 5,
+        "site_counts": {
+          "ageri": 1065,
+          "bianco": 197,
+          "geneva": 3280,
+          "mendota": 300,
+          "venice": 600
+        },
+        "scenes": 43,
+        "class_counts": {
+          "1": 1689,
+          "2": 1623,
+          "3": 2130
+        },
+        "sensor_counts": {
+          "LC08": 3677,
+          "LC09": 1765
+        },
+        "season_counts": {
+          "DJF": 1215,
+          "MAM": 1200,
+          "JJA": 1947,
+          "SON": 1080
+        }
+      },
+      "leave_out_site": {
+        "rows": 1606,
+        "sites": 1,
+        "site_counts": {
+          "greifensee": 1606
+        },
+        "scenes": 21,
+        "class_counts": {
+          "1": 300,
+          "2": 256,
+          "3": 1050
+        },
+        "sensor_counts": {
+          "LC08": 1156,
+          "LC09": 450
+        },
+        "season_counts": {
+          "DJF": 506,
+          "MAM": 750,
+          "JJA": 250,
+          "SON": 100
+        }
+      }
+    },
+    "validation": {
+      "row_count": 28800,
+      "held_out_site_exclusive": true,
+      "train_test_scene_overlap_count": 1,
+      "train_test_scene_overlap": [
+        "LC08_L1TP_196028_20210906_20210915_02_T1"
+      ],
+      "only_configured_train_test_overlap": true,
+      "overlap_exception_counts": {
+        "train": 120,
+        "test": 30,
+        "leave_out_site": 0
+      },
+      "shared_acquisition_scene_count": 6,
+      "shared_acquisition_scenes": [
+        "LC08_L1TP_194027_20230322_20230325_02_T1",
+        "LC08_L1TP_194027_20231219_20240103_02_T1",
+        "LC08_L1TP_194027_20240120_20240129_02_T1",
+        "LC08_L1TP_194027_20250412_20250416_02_T1",
+        "LC08_L1TP_194027_20250530_20250606_02_T1",
+        "LC08_L1TP_195027_20230905_20230912_02_T1"
+      ],
+      "shared_acquisition_note": "A scene ID may cover more than one lake. Shared IDs do not contain held-out-site pixels in development data; they are reported for audit.",
+      "coverage": {
+        "train": {
+          "sites": [
+            "ageri",
+            "bianco",
+            "geneva",
+            "mendota",
+            "venice"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        },
+        "test": {
+          "sites": [
+            "ageri",
+            "bianco",
+            "geneva",
+            "mendota",
+            "venice"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        },
+        "leave_out_site": {
+          "sites": [
+            "greifensee"
+          ],
+          "classes": [
+            1,
+            2,
+            3
+          ],
+          "sensors": [
+            "LC08",
+            "LC09"
+          ],
+          "seasons": [
+            "DJF",
+            "JJA",
+            "MAM",
+            "SON"
+          ]
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "run_index": 4,
+      "run_name": "held_out_greifensee",
+      "held_out_site": "greifensee",
+      "model": "decision_tree",
+      "train_accuracy": 0.9937017285766826,
+      "train_balanced_accuracy": 0.9937485468858469,
+      "train_f1_macro": 0.9934788596725577,
+      "test_accuracy": 0.4755604557148107,
+      "test_balanced_accuracy": 0.46573481308139303,
+      "test_f1_macro": 0.4627568473459216,
+      "leave_out_site_accuracy": 0.5398505603985057,
+      "leave_out_site_balanced_accuracy": 0.5364409722222222,
+      "leave_out_site_f1_macro": 0.48895627911251216,
+      "cv_selection_score_mean": 0.785862674413828,
+      "cv_selection_score_std": 0.0031060969243045054,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"ccp_alpha\": 0.00011988902140243029, \"class_weight\": null, \"criterion\": \"log_loss\", \"max_depth\": 24, \"max_features\": null, \"max_leaf_nodes\": null, \"min_impurity_decrease\": 0.0, \"min_samples_leaf\": 1, \"min_samples_split\": 2, \"min_weight_fraction_leaf\": 0.0, \"monotonic_cst\": null, \"random_state\": 42, \"splitter\": \"best\"}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/DT_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/model_metadata.json"
+    },
+    {
+      "run_index": 4,
+      "run_name": "held_out_greifensee",
+      "held_out_site": "greifensee",
+      "model": "random_forest",
+      "train_accuracy": 1.0,
+      "train_balanced_accuracy": 1.0,
+      "train_f1_macro": 1.0,
+      "test_accuracy": 0.5207644248438075,
+      "test_balanced_accuracy": 0.5105461903564533,
+      "test_f1_macro": 0.5050580103459796,
+      "leave_out_site_accuracy": 0.6556662515566625,
+      "leave_out_site_balanced_accuracy": 0.6654737103174603,
+      "leave_out_site_f1_macro": 0.6057497742565502,
+      "cv_selection_score_mean": 0.8822731528223159,
+      "cv_selection_score_std": 0.005203180537457979,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": null,
+      "selected_parameters": "{\"bootstrap\": false, \"ccp_alpha\": 0.0, \"class_weight\": null, \"criterion\": \"entropy\", \"max_depth\": null, \"max_features\": 0.5, \"max_leaf_nodes\": null, \"max_samples\": null, \"min_impurity_decrease\": 0.0, \"min_samples_leaf\": 1, \"min_samples_split\": 2, \"min_weight_fraction_leaf\": 0.0, \"monotonic_cst\": null, \"n_estimators\": 700, \"n_jobs\": -1, \"oob_score\": false, \"random_state\": 42, \"verbose\": 0, \"warm_start\": false}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/RF_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/model_metadata.json"
+    },
+    {
+      "run_index": 4,
+      "run_name": "held_out_greifensee",
+      "held_out_site": "greifensee",
+      "model": "xgboost",
+      "train_accuracy": 1.0,
+      "train_balanced_accuracy": 1.0,
+      "train_f1_macro": 1.0,
+      "test_accuracy": 0.5246233002572583,
+      "test_balanced_accuracy": 0.5170875574119945,
+      "test_f1_macro": 0.512031828527807,
+      "leave_out_site_accuracy": 0.6693648816936488,
+      "leave_out_site_balanced_accuracy": 0.6872569444444444,
+      "leave_out_site_f1_macro": 0.6248693794459367,
+      "cv_selection_score_mean": 0.8973207147022837,
+      "cv_selection_score_std": 0.004742978903695779,
+      "selection_scoring": "balanced_accuracy",
+      "n_trials": 200,
+      "searches": 1,
+      "final_n_estimators": 1393,
+      "selected_parameters": "{\"colsample_bytree\": 0.9594089224781386, \"gamma\": 0.0012307215619306493, \"learning_rate\": 0.02337913498270422, \"max_depth\": 10, \"min_child_weight\": 0.9528630278916974, \"n_estimators\": 1393, \"reg_alpha\": 7.2131047269559e-05, \"reg_lambda\": 0.14884950859785154, \"subsample\": 0.8523396783883004}",
+      "train_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_train_80.csv",
+      "test_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_test_20.csv",
+      "leave_out_site_csv": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/df_leave_out_site.csv",
+      "scene_manifest_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/datasets/held_out_greifensee/scene_split_manifest.csv",
+      "model_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/XGB_best_all_general.pkl",
+      "metrics_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/metrics_summary.json",
+      "metadata_path": "/Users/airahaghi/Documents/Trishna/Scripts/LSWT-ML-thin-cloud-masking/outputs/leave_one_site_out/models/held_out_greifensee/model_metadata.json"
+    }
+  ]
+}

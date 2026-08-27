@@ -1,1 +1,2 @@
 models/general/*.pkl filter=lfs diff=lfs merge=lfs -text
+outputs/leave_one_site_out/**/*.pkl filter=lfs diff=lfs merge=lfs -text
